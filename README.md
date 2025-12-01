@@ -19,6 +19,14 @@ cd musl
 git checkout v1.2.5
 ```
 
+## busybox源码获取
+
+```shell
+git clone https://github.com/mirror/busybox.git
+cd busybox
+git checkout 1_36_stable
+```
+
 ## 查找运行环境中libclang.so文件位置
 
 ```shell

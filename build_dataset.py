@@ -5,7 +5,7 @@ from config import OUTPUT_DIR
 
 def run_script(name):
     print(f"Running {name}...")
-    subprocess.run(["python", os.path.join("scripts", name)], check=True)
+    subprocess.run(["python", name], check=True)
 
 
 def main():

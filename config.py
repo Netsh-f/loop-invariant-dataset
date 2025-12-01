@@ -1,27 +1,14 @@
-import os
+# config.py
 
-# 固定 musl 版本（确保可复现）
-MUSL_REPO = "../musl"
-MUSL_VERSION = "v1.2.5"  # musl 官方 release tag
+MUSL_REPO = "./musl"
+BUSYBOX_REPO = "./busybox"
 
-# 搜索的源码子目录（避免测试/文档）
-SOURCE_DIRS = [
-    "src/string",
-    "src/stdio",
-    "src/stdlib",
-    "src/time",
-    "src/multibyte",
-]
+# 源码子目录（根据项目结构调整）
+MUSL_SOURCE_DIRS = ["src"]
+BUSYBOX_SOURCE_DIRS = ["libbb", "coreutils", "networking", "arch", "console-tools", "e2fsprogs", "editors", "findutils",
+                       "loginutils", "mail", "miscutils", "modutils", "procps", "runit", "selinux", "shell", "sysklogd",
+                       "util-linux"]
 
-# 输出路径
-OUTPUT_DIR = "output"
-RAW_LOOPS_DIR = os.path.join(OUTPUT_DIR, "raw_loops")
-ABSTRACTED_DIR = os.path.join(OUTPUT_DIR, "abstracted")
-VERIFIED_DIR = os.path.join(OUTPUT_DIR, "verified")
+CLANG_ARGS = ['-I./musl/include', '-I./busybox/include', '-D__MUSL__', '-D_GNU_SOURCE']
 
-# CBMC 配置
-CBMC_UNWIND = 20
-CBMC_TIMEOUT = 30  # seconds per loop
-
-# Clang 配置
-CLANG_ARGS = ["-I./musl/include", "-D_XOPEN_SOURCE=700"]
+RAW_LOOPS_DIR = "output/raw_loops"
