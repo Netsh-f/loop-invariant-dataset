@@ -1,7 +1,12 @@
 # config.py
+import os
 
-MUSL_REPO = "./musl"
-BUSYBOX_REPO = "./busybox"
+MUSL_REPO = "../musl"
+BUSYBOX_REPO = "../busybox"
+OUTPUT_DIR = "output"
+RAW_LOOPS_DIR = os.path.join(OUTPUT_DIR, "raw_loops")
+ABSTRACTED_DIR = os.path.join(OUTPUT_DIR, "abstracted")
+VERIFIED_DIR = os.path.join(OUTPUT_DIR, "verified")
 
 # 源码子目录（根据项目结构调整）
 MUSL_SOURCE_DIRS = ["src"]

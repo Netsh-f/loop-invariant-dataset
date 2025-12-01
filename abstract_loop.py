@@ -4,28 +4,19 @@ import json
 import re
 from config import RAW_LOOPS_DIR, ABSTRACTED_DIR
 
+import re
+
 
 def is_simple_pointer_loop(code):
-    # 现有检查逻辑保持不变...
-
-    # 新增: 检查并拒绝包含指针递减的循环
-    if re.search(r'\b\w+\s*--|--\s*\w+|\+\s*-\d+|-\s*\d+\s*\+', code):
+    """只处理安全的指针遍历模式"""
+    if not re.search(r'\*\s*\w', code):
         return False
-
-    # 同样拒绝 p += -1, p -= 1 这种模式
-    if re.search(r'\b\w+\s*[+-]=\s*-?\d+', code):
-        # 允许 p += 1, p -= 1? 保守处理: 只允许 ++ 和 += 正数
-        lines = code.split(';')
-        for line in lines:
-            # 如果是 += 操作，检查右侧是否为正数常量或变量
-            if re.search(r'\b(\w+)\s*\+=', line):
-                if not re.search(r'\+=\s*[1-9]\d*', line):  # 仅允许 += 后跟正数
-                    return False
-            # 直接拒绝 -- 模式
-            if re.search(r'\b(\w+)\s*--|--\s*\b\w+', line):
-                return False
-
-    # 如果以上所有条件都未被触发，则返回 True 表示该循环通过了简单指针循环的检查
+    # 允许 *p++, *++p, p++, ++p
+    if not re.search(r'\b\w+\s*\+\+|\+\+\s*\w+', code):
+        return False
+    # 不含函数调用（除控制关键字外）
+    if re.search(r'\b(?!if|while|for|assert|return)\w+\s*\(', code):
+        return False
     return True
 
 

@@ -14,6 +14,7 @@ def main():
     run_script("abstract_loop.py")
     run_script("verify_invariant.py")
     run_script("clean_data.py")
+    run_script("analyze_results.py")
     print("✅ Dataset built at output/dataset.json")
 
 
