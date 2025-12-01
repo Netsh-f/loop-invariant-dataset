@@ -94,7 +94,7 @@ def main():
 
                 # Run CBMC
                 result = subprocess.run(
-                    ['cbmc', '--unwind', '20', tmp_path],
+                    ['cbmc', '--function', func_name, '--unwind', '20', tmp_path],
                     capture_output=True,
                     text=True
                 )
