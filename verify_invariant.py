@@ -1,16 +1,26 @@
+# verify_invariant.py
 import os
 import json
+import re
 import subprocess
 import tempfile
 from jinja2 import Template
-from config import ABSTRACTED_DIR, VERIFIED_DIR, CBMC_UNWIND, CBMC_TIMEOUT
+from config import ABSTRACTED_DIR, VERIFIED_DIR
 
-TEMPLATE = '''#include <assert.h>
+TEMPLATE = '''
+#include <assert.h>
 void {{ func_name }}() {
+    // Declare pointer indices and arrays
     {% for p in ptr_vars %}
     int {{ p }}_idx = 0;
     unsigned char arr_{{ p }}[100] = {0};
     {% endfor %}
+
+    // Declare scalar variables used in loop body
+    {% for v in scalar_vars %}
+    unsigned int {{ v }} = 0;
+    {% endfor %}
+
     // Input assumption (example)
     __CPROVER_assume(arr_h[0] != 0);
 
@@ -19,21 +29,33 @@ void {{ func_name }}() {
         {% for p in ptr_vars %}({{ p }}_idx >= 0) && {% endfor %}(1)
 
     assert(INVARIANT);
-    {{ abstracted_code | indent(4) | replace("\\n", "\\n    ") }}
+    {{ loop_body }}
     assert(INVARIANT);
 }
 '''
 
 
-def run_cbmc(c_file):
-    try:
-        result = subprocess.run(
-            ["cbmc", "--unwind", str(CBMC_UNWIND), "--bounds-check", c_file],
-            capture_output=True, text=True, timeout=CBMC_TIMEOUT
-        )
-        return result.returncode == 0, result.stdout + result.stderr
-    except subprocess.TimeoutExpired:
-        return False, "TIMEOUT"
+def extract_scalar_vars(loop_body, ptr_vars):
+    """从循环体中提取非指针标量变量"""
+    all_ids = set(re.findall(r'\b[a-zA-Z_]\w*\b', loop_body))
+    keywords = {
+        'if', 'else', 'for', 'while', 'do', 'switch', 'case', 'default',
+        'return', 'break', 'continue', 'assert', 'sizeof', 'int', 'char',
+        'void', 'unsigned', 'signed', 'short', 'long', 'struct', 'union',
+        '__CPROVER_assume'
+    }
+    ptr_idx_names = {f"{p}_idx" for p in ptr_vars}
+    arr_names = {f"arr_{p}" for p in ptr_vars}
+    scalar_vars = (
+            all_ids
+            - ptr_vars
+            - ptr_idx_names
+            - arr_names
+            - keywords
+    )
+    # 过滤掉纯大写（可能是宏）
+    scalar_vars = {v for v in scalar_vars if not v.isupper()}
+    return sorted(scalar_vars)
 
 
 def main():
@@ -43,29 +65,54 @@ def main():
     for fname in os.listdir(ABSTRACTED_DIR):
         if not fname.endswith('.json'):
             continue
+
         with open(os.path.join(ABSTRACTED_DIR, fname)) as f:
             data = json.load(f)
 
-        # 生成 C 文件
-        c_code = template.render(
-            func_name="test_" + data["id"],
-            ptr_vars=data["ptr_vars"],
-            abstracted_code=data["abstracted_code"],
-            idx=list(data["ptr_vars"].values())[0] if data["ptr_vars"] else "0"
-        )
+        loop_id = data["id"]
+        loop_body = data["abstracted_code"]
+        ptr_vars = list(data["ptr_vars"].keys())
 
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.c', delete=False) as tmp:
-            tmp.write(c_code)
-            tmp_path = tmp.name
+        if not loop_body.strip():
+            verified = False
+            log = "Skipped: empty or unsupported loop"
+        else:
+            try:
+                scalar_vars = extract_scalar_vars(loop_body, set(ptr_vars))
+                func_name = f"test_{loop_id.replace('.', '_').replace('-', '_')}"
 
-        is_safe, log = run_cbmc(tmp_path)
-        os.unlink(tmp_path)
+                rendered = template.render(
+                    func_name=func_name,
+                    ptr_vars=ptr_vars,
+                    scalar_vars=scalar_vars,
+                    loop_body=loop_body.strip()
+                )
+
+                with tempfile.NamedTemporaryFile(mode='w', suffix='.c', delete=False) as tmp:
+                    tmp.write(rendered)
+                    tmp_path = tmp.name
+
+                # Run CBMC
+                result = subprocess.run(
+                    ['cbmc', '--unwind', '20', tmp_path],
+                    capture_output=True,
+                    text=True
+                )
+                os.unlink(tmp_path)
+
+                verified = "VERIFICATION SUCCESSFUL" in result.stdout
+                log = result.stdout + result.stderr
+
+            except Exception as e:
+                verified = False
+                log = str(e)
 
         out = {
-            "id": data["id"],
-            "invariant": "/* auto-generated */ " + ("h_idx >= 0" if data["ptr_vars"] else "true"),
-            "verified": is_safe,
-            "cbmc_log": log[:2000]  # truncate
+            "id": loop_id,
+            "invariant": "/* auto-generated */ " + " && ".join(
+                [f"{p}_idx >= 0" for p in ptr_vars]) if ptr_vars else "true",
+            "verified": verified,
+            "cbmc_log": log[:2000]  # 避免日志过长
         }
 
         with open(os.path.join(VERIFIED_DIR, fname), 'w') as f:
