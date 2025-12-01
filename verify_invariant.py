@@ -14,15 +14,13 @@ void {{ func_name }}() {
     {% for p in ptr_vars %}
     int {{ p }}_idx = 0;
     unsigned char arr_{{ p }}[100] = {0};
+    __CPROVER_assume(arr_{{ p }}[0] != 0); // basic non-null assumption
     {% endfor %}
 
     // Declare scalar variables used in loop body
     {% for v in scalar_vars %}
     unsigned int {{ v }} = 0;
     {% endfor %}
-
-    // Input assumption (example)
-    __CPROVER_assume(arr_h[0] != 0);
 
     // Simple invariant: all indices >= 0
     #define INVARIANT \\
