@@ -34,25 +34,21 @@ def generate_abstract_c(loop_id, original_code):
                 'switch', 'case', 'default', 'goto', 'sizeof', 'typedef', 'struct',
                 'union', 'enum', 'const', 'volatile', 'static', 'extern', 'auto', 'register'}
 
-    # Step 0: 识别指针/数组变量
-    # (1) 解引用: *p
-    for match in re.finditer(r'\*\s*(\w+)', original_code):
+    # Step 0: 精确识别指针/数组变量
+    # (1) 解引用 *p —— 但排除乘法 y * x
+    # 使用负向后瞻 (?<!\w) 确保 * 前不是字母/数字/下划线
+    for match in re.finditer(r'(?<!\w)\*\s*(\w+)', original_code):
         var = match.group(1)
         if var not in keywords:
             ptr_vars.add(var)
 
-    # (2) 自增/自减: p++, ++p 等（保守加入，后续靠裸变量检查过滤）
-    for pattern in [r'(\w+)\s*\+\+', r'\+\+\s*(\w+)', r'(\w+)\s*--', r'--\s*(\w+)']:
-        for match in re.finditer(pattern, original_code):
-            var = match.group(1)
-            if var not in keywords:
-                ptr_vars.add(var)
-
-    # (3) ✅ 新增：数组名 days[...] → days 是数组/指针
+    # (2) 数组名: arr[expr]
     for match in re.finditer(r'\b([a-zA-Z_]\w*)\s*(?=\[)', original_code):
         var = match.group(1)
         if var not in keywords:
             ptr_vars.add(var)
+
+    # ❌ 移除：不再根据 p++, --p 判断指针！(n, i, count 等标量会误入)
 
     if not ptr_vars:
         return None, {}
@@ -61,29 +57,34 @@ def generate_abstract_c(loop_id, original_code):
 
     # Step 1: 处理复合解引用（*p++ 和 *++p）
     for p in sorted(ptr_vars, key=len, reverse=True):  # 长名字优先，避免部分匹配
-        code = re.sub(rf'\*\s*{re.escape(p)}\s*\+\+', f"arr_{p}[{p}_idx++]", code)
-        code = re.sub(rf'\*\s*\+\+\s*{re.escape(p)}\b', f"arr_{p}[++{p}_idx]", code)
+        p_esc = re.escape(p)
+        code = re.sub(rf'\*\s*{p_esc}\s*\+\+', f"arr_{p}[{p}_idx++]", code)
+        code = re.sub(rf'\*\s*\+\+\s*{p_esc}\b', f"arr_{p}[++{p}_idx]", code)
 
     # Step 2: 处理普通解引用 *p
     for p in sorted(ptr_vars, key=len, reverse=True):
-        code = re.sub(rf'\*\s*{re.escape(p)}\b', f"arr_{p}[{p}_idx]", code)
+        p_esc = re.escape(p)
+        code = re.sub(rf'\*\s*{p_esc}\b', f"arr_{p}[{p}_idx]", code)
 
-    # Step 3: ✅ 新增：处理数组访问 days[expr] → arr_days[expr]
+    # Step 3: 处理数组访问 days[expr] → arr_days[expr]
     for p in sorted(ptr_vars, key=len, reverse=True):
-        # 匹配 days[...] 但不匹配 arr_days[...]（避免重复替换）
-        code = re.sub(rf'\b{re.escape(p)}\s*(\[[^\]]*\])', rf'arr_{p}\1', code)
+        p_esc = re.escape(p)
+        # 替换 arr[expr] 为 arr_arr[expr]，但避免重复替换 arr_arr[...]
+        code = re.sub(rf'\b{p_esc}\s*(\[[^\]]*\])', rf'arr_{p}\1', code)
 
-    # Step 4: 处理独立递增/递减（仅对指针变量）
+    # Step 4: 处理独立递增/递减（仅对真正指针变量）
     for p in sorted(ptr_vars, key=len, reverse=True):
-        code = re.sub(rf'\b{re.escape(p)}\s*\+\+', f"{p}_idx++", code)
-        code = re.sub(rf'\+\+\s*{re.escape(p)}\b', f"{p}_idx++", code)
-        code = re.sub(rf'\b{re.escape(p)}\s*--', f"{p}_idx--", code)
-        code = re.sub(rf'--\s*{re.escape(p)}\b', f"{p}_idx--", code)
+        p_esc = re.escape(p)
+        code = re.sub(rf'\b{p_esc}\s*\+\+', f"{p}_idx++", code)
+        code = re.sub(rf'\+\+\s*{p_esc}\b', f"{p}_idx++", code)
+        code = re.sub(rf'\b{p_esc}\s*--', f"{p}_idx--", code)
+        code = re.sub(rf'--\s*{p_esc}\b', f"{p}_idx--", code)
 
     # Step 5: 检查是否还有裸指针或裸数组名（未被抽象）
     for p in ptr_vars:
-        # 如果存在单独的 'days'（后面不是 [, *, ++, --, ->），说明抽象不完整
-        if re.search(rf'\b{re.escape(p)}\b(?!\s*[\[\*\+\-\>])', code):
+        p_esc = re.escape(p)
+        # 如果存在单独的 'p'（后面不是 [, *, ++, --, ->），说明抽象不完整
+        if re.search(rf'\b{p_esc}\b(?!\s*[\[\*\+\-\>])', code):
             return None, {}
 
     return code, {p: f"{p}_idx" for p in ptr_vars}
