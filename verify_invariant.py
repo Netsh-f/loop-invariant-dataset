@@ -6,6 +6,7 @@ import subprocess
 import tempfile
 from pathlib import Path
 from jinja2 import Template
+from tqdm import tqdm
 
 
 # ----------------------------
@@ -98,12 +99,12 @@ def main():
 
     template = Template(TEMPLATE)
 
-    for json_file in abstracted_dir.glob("*.json"):
+    json_files = list(abstracted_dir.glob("*.json"))
+    for json_file in tqdm(json_files, desc="Processing files"):
         with open(json_file) as f:
             data = json.load(f)
 
         loop_id = data["id"]
-        print(f"Processing {loop_id}...")
 
         if "abstracted_code" not in data or not data["abstracted_code"].strip():
             # Skipped during abstraction

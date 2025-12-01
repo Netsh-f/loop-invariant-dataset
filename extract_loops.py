@@ -23,16 +23,53 @@ def setup_clang():
 def get_source_code(cursor, file_content):
     start = cursor.extent.start
     end = cursor.extent.end
-    if not start.file or start.file.name != end.file.name:
+
+    # 检查是否来自同一文件（必要）
+    if not start.file or not end.file or start.file.name != end.file.name:
         return ""
+
     lines = file_content.splitlines()
-    if start.line == end.line:
-        return lines[start.line - 1][start.column - 1:end.column]
-    else:
-        first = lines[start.line - 1][start.column - 1:]
-        middle = lines[start.line:end.line - 1]
-        last = lines[end.line - 1][:end.column] if end.line <= len(lines) else ""
-        return "\n".join([first] + middle + [last])
+    num_lines = len(lines)
+
+    # 保护：Clang 可能返回 line=0 表示无效位置
+    if start.line <= 0 or end.line <= 0:
+        return ""
+
+    # 行号越界检查（Clang 行号从 1 开始）
+    if start.line > num_lines or end.line > num_lines:
+        return ""
+
+    try:
+        if start.line == end.line:
+            line_str = lines[start.line - 1]
+            # 列也是 1-based，且可能超出当前行长度
+            start_col = max(0, min(start.column - 1, len(line_str)))
+            end_col = max(start_col, min(end.column, len(line_str)))
+            return line_str[start_col:end_col]
+        else:
+            # 第一行（从 start.column 到行尾）
+            first_line = lines[start.line - 1]
+            start_col = max(0, min(start.column - 1, len(first_line)))
+            first = first_line[start_col:]
+
+            # 中间行（完整行）
+            middle_start = start.line
+            middle_end = end.line - 1
+            # 确保 middle 范围有效
+            if middle_start < num_lines and middle_end >= middle_start:
+                middle = lines[middle_start:middle_end]
+            else:
+                middle = []
+
+            # 最后一行（从行首到 end.column）
+            last_line = lines[end.line - 1]
+            end_col = max(0, min(end.column, len(last_line)))
+            last = last_line[:end_col]
+
+            return "\n".join([first] + middle + [last])
+    except Exception:
+        # 任何异常都安全返回空字符串
+        return ""
 
 
 def extract_loops_from_file(filepath, project_prefix):
