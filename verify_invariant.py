@@ -5,27 +5,24 @@ import tempfile
 from jinja2 import Template
 from config import ABSTRACTED_DIR, VERIFIED_DIR, CBMC_UNWIND, CBMC_TIMEOUT
 
-TEMPLATE = """
-#include <assert.h>
-void {{func_name}}() {
-    // Abstracted variables
-    {% for p, idx in ptr_vars.items() %}
-    int {{idx}} = 0;
-    unsigned char arr_{{p}}[100] = {0};
+TEMPLATE = '''#include <assert.h>
+void {{ func_name }}() {
+    {% for p in ptr_vars %}
+    int {{ p }}_idx = 0;
+    unsigned char arr_{{ p }}[100] = {0};
     {% endfor %}
-    // TODO: Add scalar vars if needed
-
-    // Assume valid input
+    // Input assumption (example)
     __CPROVER_assume(arr_h[0] != 0);
 
-    // Simple candidate invariant (can be enhanced later)
-    #define INVARIANT ({{idx}} >= 0)
+    // Simple invariant: all indices >= 0
+    #define INVARIANT \\
+        {% for p in ptr_vars %}({{ p }}_idx >= 0) && {% endfor %}(1)
 
     assert(INVARIANT);
-    {{abstracted_code | indent(4)}}
+    {{ abstracted_code | indent(4) | replace("\\n", "\\n    ") }}
     assert(INVARIANT);
 }
-"""
+'''
 
 
 def run_cbmc(c_file):
