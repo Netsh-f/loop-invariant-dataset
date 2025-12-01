@@ -72,9 +72,10 @@ void {{ func_name }}() {
     unsigned int {{ v }} = 0;
     {% endfor %}
 
-    // Declare unknown symbols (macros / constants) as symbolic constants
+    // Declare unknown symbols as symbolic variables (not const!)
     {% for sym in undeclared_symbols %}
-    const unsigned int {{ sym }} = 1;  // symbolic constant placeholder
+    unsigned int {{ sym }};
+    __CPROVER_assume({{ sym }} >= 0);
     {% endfor %}
 
     // Simple auto-generated invariant: all pointer indices >= 0
