@@ -8,16 +8,21 @@ import re
 
 
 def is_simple_pointer_loop(code):
-    """只处理安全的指针遍历模式"""
-    if not re.search(r'\*\s*\w', code):
-        return False
-    # 允许 *p++, *++p, p++, ++p
-    if not re.search(r'\b\w+\s*\+\+|\+\+\s*\w+', code):
-        return False
-    # 不含函数调用（除控制关键字外）
-    if re.search(r'\b(?!if|while|for|assert|return)\w+\s*\(', code):
-        return False
-    return True
+    # 拒绝明显复杂的结构
+    if re.search(r'\b(?!if|while|for|assert|return|else)\w+\s*\(', code):
+        return False  # 有函数调用（除控制关键字）
+    if '->' in code or '.' in code:
+        return False  # 结构体访问
+    if re.search(r'\b(errno|stdout|stderr|stdin)\s*=', code, re.IGNORECASE):
+        return False  # 全局变量赋值
+
+    # 允许以下任一模式：
+    #   - 指针递增: p++, ++p, p += 1
+    #   - 数组索引: arr[i], i++
+    has_ptr_inc = re.search(r'\b\w+\s*\+\+|\+\+\s*\w+|\b\w+\s*\+=\s*1', code)
+    has_array_access = re.search(r'\w+\s*\[\s*\w+\s*\]', code)
+
+    return bool(has_ptr_inc or has_array_access)
 
 
 def generate_abstract_c(loop_id, original_code):
