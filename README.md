@@ -27,6 +27,12 @@ cd busybox
 git checkout 1_36_stable
 ```
 
+## coreutils源码获取
+
+```shell
+git clone https://git.savannah.gnu.org/git/coreutils.git
+```
+
 ## 查找运行环境中libclang.so文件位置
 
 ```shell

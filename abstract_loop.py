@@ -4,8 +4,6 @@ import json
 import re
 from config import RAW_LOOPS_DIR, ABSTRACTED_DIR
 
-import re
-
 
 def is_simple_pointer_loop(code):
     # 拒绝明显复杂的结构

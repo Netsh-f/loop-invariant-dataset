@@ -124,6 +124,15 @@ def main():
     )
     all_loops.extend(busybox_loops)
 
+    # Process coreutils
+    print("🔍 Processing coreutils...")
+    coreutils_loops = process_project(
+        repo_path=config.COREUTILS_REPO,
+        source_dirs=config.COREUTILS_SOURCE_DIRS,
+        project_prefix="coreutils"
+    )
+    all_loops.extend(coreutils_loops)
+
     # Save all raw loops
     for loop in all_loops:
         out_path = os.path.join(config.RAW_LOOPS_DIR, loop["id"] + ".json")
