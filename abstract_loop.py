@@ -30,42 +30,62 @@ def generate_abstract_c(loop_id, original_code):
     输出:      for (h_idx++; arr_h[h_idx] && hw != nw; hw = hw<<8 | arr_h[++h_idx]);
     """
     ptr_vars = set()
+    keywords = {'if', 'else', 'for', 'while', 'do', 'return', 'break', 'continue',
+                'switch', 'case', 'default', 'goto', 'sizeof', 'typedef', 'struct',
+                'union', 'enum', 'const', 'volatile', 'static', 'extern', 'auto', 'register'}
+
+    # Step 0: 识别指针/数组变量
+    # (1) 解引用: *p
     for match in re.finditer(r'\*\s*(\w+)', original_code):
-        ptr_vars.add(match.group(1))
-    for match in re.finditer(r'(\w+)\s*\+\+', original_code):
-        ptr_vars.add(match.group(1))
-    for match in re.finditer(r'\+\+\s*(\w+)', original_code):
-        ptr_vars.add(match.group(1))
+        var = match.group(1)
+        if var not in keywords:
+            ptr_vars.add(var)
+
+    # (2) 自增/自减: p++, ++p 等（保守加入，后续靠裸变量检查过滤）
+    for pattern in [r'(\w+)\s*\+\+', r'\+\+\s*(\w+)', r'(\w+)\s*--', r'--\s*(\w+)']:
+        for match in re.finditer(pattern, original_code):
+            var = match.group(1)
+            if var not in keywords:
+                ptr_vars.add(var)
+
+    # (3) ✅ 新增：数组名 days[...] → days 是数组/指针
+    for match in re.finditer(r'\b([a-zA-Z_]\w*)\s*(?=\[)', original_code):
+        var = match.group(1)
+        if var not in keywords:
+            ptr_vars.add(var)
 
     if not ptr_vars:
         return None, {}
 
     code = original_code
 
-    # Step 1: 处理复合解引用（顺序很重要！）
-    for p in ptr_vars:
-        # *p++ → arr_p[p_idx++]
-        code = re.sub(rf'\*\s*{p}\s*\+\+', f"arr_{p}[{p}_idx++]", code)
-        # *++p → arr_p[++p_idx]
-        code = re.sub(rf'\*\s*\+\+\s*{p}\b', f"arr_{p}[++{p}_idx]", code)
+    # Step 1: 处理复合解引用（*p++ 和 *++p）
+    for p in sorted(ptr_vars, key=len, reverse=True):  # 长名字优先，避免部分匹配
+        code = re.sub(rf'\*\s*{re.escape(p)}\s*\+\+', f"arr_{p}[{p}_idx++]", code)
+        code = re.sub(rf'\*\s*\+\+\s*{re.escape(p)}\b', f"arr_{p}[++{p}_idx]", code)
 
-    # Step 2: 处理普通 *p
-    for p in ptr_vars:
-        code = re.sub(rf'\*\s*{p}\b', f"arr_{p}[{p}_idx]", code)
+    # Step 2: 处理普通解引用 *p
+    for p in sorted(ptr_vars, key=len, reverse=True):
+        code = re.sub(rf'\*\s*{re.escape(p)}\b', f"arr_{p}[{p}_idx]", code)
 
-    # Step 3: 处理独立递增/递减
-    for p in ptr_vars:
-        code = re.sub(rf'\b{p}\s*\+\+', f"{p}_idx++", code)
-        code = re.sub(rf'\+\+\s*{p}\b', f"{p}_idx++", code)
-        code = re.sub(rf'\b{p}\s*--', f"{p}_idx--", code)
-        code = re.sub(rf'--\s*{p}\b', f"{p}_idx--", code)
+    # Step 3: ✅ 新增：处理数组访问 days[expr] → arr_days[expr]
+    for p in sorted(ptr_vars, key=len, reverse=True):
+        # 匹配 days[...] 但不匹配 arr_days[...]（避免重复替换）
+        code = re.sub(rf'\b{re.escape(p)}\s*(\[[^\]]*\])', rf'arr_{p}\1', code)
 
-    # Step 4: 检查是否还有裸指针（如单独的 'h'）
+    # Step 4: 处理独立递增/递减（仅对指针变量）
+    for p in sorted(ptr_vars, key=len, reverse=True):
+        code = re.sub(rf'\b{re.escape(p)}\s*\+\+', f"{p}_idx++", code)
+        code = re.sub(rf'\+\+\s*{re.escape(p)}\b', f"{p}_idx++", code)
+        code = re.sub(rf'\b{re.escape(p)}\s*--', f"{p}_idx--", code)
+        code = re.sub(rf'--\s*{re.escape(p)}\b', f"{p}_idx--", code)
+
+    # Step 5: 检查是否还有裸指针或裸数组名（未被抽象）
     for p in ptr_vars:
-        if re.search(rf'\b{p}\b(?!\s*[\[\*\+\-\>])', code):
+        # 如果存在单独的 'days'（后面不是 [, *, ++, --, ->），说明抽象不完整
+        if re.search(rf'\b{re.escape(p)}\b(?!\s*[\[\*\+\-\>])', code):
             return None, {}
 
-    # ✅ 只返回循环体！
     return code, {p: f"{p}_idx" for p in ptr_vars}
 
 
