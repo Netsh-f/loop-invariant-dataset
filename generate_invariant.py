@@ -73,7 +73,7 @@ Generate the CBMC-ready C program with a proper loop invariant.
 
 
 def main():
-    client = OpenAI(api_key=os.environ.get('DEEPSEEK_API_KEY')),
+    client = OpenAI(api_key=os.environ.get('DEEPSEEK_API_KEY'),
                     base_url="https://api.deepseek.com")
     with open("output/loop_dataset.json", "r", encoding="utf-8") as f:
         loop_dataset = json.load(f)
