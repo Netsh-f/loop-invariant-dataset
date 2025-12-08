@@ -1,5 +1,7 @@
 import json
 import os
+import re
+
 import clang
 from clang.cindex import Index, CursorKind
 
@@ -36,11 +38,13 @@ def precess_project(root_path: str, clang_args: list):
                 if loops:
                     all_loops.extend(loops)
                     print(f"[{files_count}] {filepath} → {len(loops)} loops")
-                    # return all_loops  # TODO 先只做一个文件
+                    return all_loops  # TODO 先只做一个文件
     return all_loops
 
 
 def get_loop_context(loop: clang.cindex.Cursor, project_info: dict):
+    source_code = get_source_code(loop)
+    abstract_code, ptr_map = abstract_loop_code(source_code, loop)
     return {
         "project_name": project_info["name"],
         "project_version": project_info["commit"],
@@ -48,7 +52,9 @@ def get_loop_context(loop: clang.cindex.Cursor, project_info: dict):
         "file_path": loop.location.file.name,
         "line": loop.location.line,
         "column": loop.location.column,
-        "source_code": get_source_code(loop),
+        "source_code": source_code,
+        "abstract_code": abstract_code,
+        "ptr_map": ptr_map,
     }
 
 
@@ -117,6 +123,95 @@ def get_source_code(cursor: clang.cindex.Cursor):
         return ''.join(snippet)
 
 
+def abstract_loop_code(code: str, cursor: clang.cindex.Cursor) -> tuple[str | None, dict]:
+    """
+    输入: 原始循环代码字符串 + Clang Cursor
+    输出: (抽象后代码, 指针映射 {"p": "p_idx"})
+    """
+    ptr_vars = set()
+    keywords = {'if', 'else', 'for', 'while', 'do', 'return', 'break', 'continue',
+                'switch', 'case', 'default', 'goto', 'sizeof', 'typedef', 'struct',
+                'union', 'enum', 'const', 'volatile', 'static', 'extern'}
+
+    def get_underlying_decl_ref(expr_cursor):
+        """递归穿透 UNEXPOSED_EXPR 等，找到最底层的 DECL_REF_EXPR"""
+        if expr_cursor.kind == CursorKind.DECL_REF_EXPR:
+            return expr_cursor
+        # 常见包装节点
+        if expr_cursor.kind == CursorKind.UNEXPOSED_EXPR:
+            for child in expr_cursor.get_children():
+                result = get_underlying_decl_ref(child)
+                if result:
+                    return result
+        return None
+
+    # === Step 1: 识别指针变量===
+    def collect_ptrs(node):
+        if node.kind == CursorKind.ARRAY_SUBSCRIPT_EXPR:
+            children = list(node.get_children())
+            if len(children) >= 1:
+                base_expr = children[0]
+                decl_ref = get_underlying_decl_ref(base_expr)
+                if decl_ref:
+                    var = decl_ref.spelling
+                    if var and var not in keywords and re.match(r'^[a-zA-Z_]', var):
+                        ptr_vars.add(var)
+
+        # 处理 *p
+        if node.kind == CursorKind.UNARY_OPERATOR and node.spelling == "*":
+            for child in node.get_children():
+                decl_ref = get_underlying_decl_ref(child)
+                if decl_ref:
+                    var = decl_ref.spelling
+                    if var not in keywords:
+                        ptr_vars.add(var)
+
+        # 递归
+        for child in node.get_children():
+            collect_ptrs(child)
+
+    collect_ptrs(cursor)
+    if not ptr_vars:
+        return None, {}
+
+    # === Step 2: 字符串替换（按名字长度降序，避免部分匹配）===
+    for p in sorted(ptr_vars, key=len, reverse=True):
+        p_esc = re.escape(p)
+
+        # *p++ → arr_p[p_idx++]
+        code = re.sub(rf'\*\s*{p_esc}\s*\+\+', f'arr_{p}[{p}_idx++]', code)
+        # *++p → arr_p[++p_idx]
+        code = re.sub(rf'\*\s*\+\+\s*{p_esc}\b', f'arr_{p}[++{p}_idx]', code)
+        # *p-- → arr_p[p_idx--]
+        code = re.sub(rf'\*\s*{p_esc}\s*--', f'arr_{p}[{p}_idx--]', code)
+        # *--p → arr_p[--p_idx]
+        code = re.sub(rf'\*\s*--\s*{p_esc}\b', f'arr_{p}[--{p}_idx]', code)
+        # *p → arr_p[p_idx]
+        code = re.sub(rf'\*\s*{p_esc}\b', f'arr_{p}[{p}_idx]', code)
+
+        # p[i] → arr_p[i]
+        code = re.sub(rf'\b{p_esc}\s*(\[[^\]]*\])', rf'arr_{p}\1', code)
+
+        # p++ → p_idx++
+        code = re.sub(rf'\b{p_esc}\s*\+\+', f'{p}_idx++', code)
+        code = re.sub(rf'\+\+\s*{p_esc}\b', f'++{p}_idx', code)
+        code = re.sub(rf'\b{p_esc}\s*--', f'{p}_idx--', code)
+        code = re.sub(rf'--\s*{p_esc}\b', f'--{p}_idx', code)
+
+    # === Step 3: 检查是否还有裸指针未替换 ===
+    for p in ptr_vars:
+        p_esc = re.escape(p)
+        # 如果存在独立的 p（非 [ * ++ -- -> .）
+        if re.search(rf'\b{p_esc}\b(?!\s*[\[\*\+\-\>])', code):
+            return None, {}  # 抽象不完整，放弃
+
+    return code, {p: f"{p}_idx" for p in ptr_vars}
+
+
+def remove_not_abstract_loop(loop_list_context: list) -> list:
+    return [loop for loop in loop_list_context if loop.get("abstract_code") is not None]
+
+
 if __name__ == "__main__":
     project_list = [
         {
@@ -131,6 +226,8 @@ if __name__ == "__main__":
         loop_list = precess_project(project["root_path"], project["clang_args"])
         print(f"===before filter len = {len(loop_list)}===")
         loop_list = filter_loop_list(loop_list)
-        print(f"===after filter len = {len(loop_list)}===")
         loop_list_context = get_loop_list_context(loop_list, project)
-        # print(json.dumps(loop_list_context, indent=2))
+        loop_list_context = remove_not_abstract_loop(loop_list_context)
+        print(f"===after filter len = {len(loop_list_context)}===")
+
+        print(json.dumps(loop_list_context, indent=2))
