@@ -6,7 +6,8 @@ from clang.cindex import Index, CursorKind
 
 def find_loops(node):
     loops = []
-    if node.kind in (CursorKind.FOR_STMT, CursorKind.WHILE_STMT, CursorKind.DO_STMT):
+    # 暂时排除掉 do-while: CursorKind.DO_STMT，往往是一些宏展开
+    if node.kind in (CursorKind.FOR_STMT, CursorKind.WHILE_STMT):
         loops.append(node)
     for child in node.get_children():
         loops.extend(find_loops(child))
@@ -35,7 +36,7 @@ def precess_project(root_path: str, clang_args: list):
                 if loops:
                     all_loops.extend(loops)
                     print(f"[{files_count}] {filepath} → {len(loops)} loops")
-                    return all_loops  # TODO 先只做一个文件
+                    # return all_loops  # TODO 先只做一个文件
     return all_loops
 
 
@@ -128,6 +129,8 @@ if __name__ == "__main__":
 
     for project in project_list:
         loop_list = precess_project(project["root_path"], project["clang_args"])
+        print(f"===before filter len = {len(loop_list)}===")
         loop_list = filter_loop_list(loop_list)
+        print(f"===after filter len = {len(loop_list)}===")
         loop_list_context = get_loop_list_context(loop_list, project)
-        print(json.dumps(loop_list_context, indent=2))
+        # print(json.dumps(loop_list_context, indent=2))
