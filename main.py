@@ -38,7 +38,7 @@ def precess_project(root_path: str, clang_args: list):
                 if loops:
                     all_loops.extend(loops)
                     print(f"[{files_count}] {filepath} → {len(loops)} loops")
-                    # return all_loops  # TODO 先只做一个文件
+                    return all_loops  # TODO 先只做一个文件
     return all_loops
 
 
