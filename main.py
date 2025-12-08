@@ -38,7 +38,7 @@ def precess_project(root_path: str, clang_args: list):
                 if loops:
                     all_loops.extend(loops)
                     print(f"[{files_count}] {filepath} → {len(loops)} loops")
-                    return all_loops  # TODO 先只做一个文件
+                    # return all_loops  # TODO 先只做一个文件
     return all_loops
 
 
@@ -66,31 +66,52 @@ def get_loop_list_context(loop_list: list, project_info: dict):
 
 
 def is_simple_loop(loop: clang.cindex.Cursor) -> bool:
+    """
+    判断是否为“简单循环”：仅含基本控制流、数组下标、简单算术。
+    排除：函数调用、结构体成员访问、取地址、goto、嵌套循环等。
+    """
+    source_code = get_source_code(loop)
+    if '->' in source_code:
+        return False
+
     def visit(node):
-        # 禁用函数调用
+        # 禁止函数调用
         if node.kind == CursorKind.CALL_EXPR:
             return False
-        # 禁止：结构体/联合体成员访问
-        if node.kind in (CursorKind.MEMBER_REF, CursorKind.MEMBER_REF_EXPR):
+
+        # 禁止结构体/联合体成员访问（包括 a.b 和 a->b）
+        if node.kind == CursorKind.MEMBER_REF_EXPR:
             return False
-        # 禁止：取地址 & 和复杂指针运算
+
+        # 禁止取地址操作 &
         if node.kind == CursorKind.UNARY_OPERATOR:
-            if node.spelling == "&":
-                return False
-        # 禁止：goto
+            # 检查操作符是否为 &
+            # 注意：node.spelling 对 UNARY_OPERATOR 可能为空，需通过 displayname 或 token
+            # 更可靠方式：检查 tokens
+            try:
+                tokens = list(node.get_tokens())
+                if tokens and tokens[0].spelling == '&':
+                    return False
+            except Exception:
+                pass  # 容错
+
+        # 禁止 goto
         if node.kind == CursorKind.GOTO_STMT:
             return False
-        # 禁止：嵌套循环
+
+        # 禁止嵌套循环（排除自身）
         if node != loop and node.kind in (
                 CursorKind.FOR_STMT,
                 CursorKind.WHILE_STMT,
                 CursorKind.DO_STMT
         ):
             return False
-        # 递归检查子节点
+
+        # 递归检查所有子节点：只要有一个子树非法，整个就非法
         for child in node.get_children():
             if not visit(child):
                 return False
+
         return True
 
     return visit(loop)
@@ -230,4 +251,6 @@ if __name__ == "__main__":
         loop_list_context = remove_not_abstract_loop(loop_list_context)
         print(f"===after filter len = {len(loop_list_context)}===")
 
-        print(json.dumps(loop_list_context, indent=2))
+        os.makedirs("output", exist_ok=True)
+        with open("output/loop_dataset.json", "w", encoding="utf-8") as f:
+            json.dump(loop_list_context, f, indent=2, ensure_ascii=False)
