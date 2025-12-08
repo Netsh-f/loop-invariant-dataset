@@ -1,0 +1,2029 @@
+[
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/crt/../ldso/dlstart.c",
+    "line": 29,
+    "column": 2,
+    "source_code": "for (i=argc+1; argv[i]; i++);\n",
+    "abstract_code": "for (i=argc+1; arr_argv[i]; i++);\n",
+    "ptr_map": {
+      "argv": "argv_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/crt/../ldso/dlstart.c",
+    "line": 123,
+    "column": 3,
+    "source_code": "for (i=0; dynv[i]; i+=2) if (dynv[i]==DT_MIPS_LOCAL_GOTNO)\n\t\t\tlocal_cnt = dynv[i+1];",
+    "abstract_code": "for (i=0; arr_dynv[i]; i+=2) if (arr_dynv[i]==DT_MIPS_LOCAL_GOTNO)\n\t\t\tlocal_cnt = arr_dynv[i+1];",
+    "ptr_map": {
+      "dynv": "dynv_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/crt/../ldso/dlstart.c",
+    "line": 125,
+    "column": 3,
+    "source_code": "for (i=0; i<local_cnt; i++) got[i] += base;",
+    "abstract_code": "for (i=0; i<local_cnt; i++) arr_got[i] += base;",
+    "ptr_map": {
+      "got": "got_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/crt/../ldso/dlstart.c",
+    "line": 152,
+    "column": 4,
+    "source_code": "for (size_t i=0, bitmap=rel[0]; bitmap>>=1; i++)\n\t\t\t\tif (bitmap&1)\n\t\t\t\t\trelr_addr[i] += base;",
+    "abstract_code": "for (size_t i=0, bitmap=arr_rel[0]; bitmap>>=1; i++)\n\t\t\t\tif (bitmap&1)\n\t\t\t\t\tarr_relr_addr[i] += base;",
+    "ptr_map": {
+      "rel": "rel_idx",
+      "relr_addr": "relr_addr_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/misc/a64l.c",
+    "line": 25,
+    "column": 2,
+    "source_code": "for (p=s; x; p++, x>>=6)\n\t\t*p = digits[x&63];",
+    "abstract_code": "for (p=s; x; p++, x>>=6)\n\t\t*p = arr_digits[x&63];",
+    "ptr_map": {
+      "digits": "digits_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/misc/wordexp.c",
+    "line": 43,
+    "column": 26,
+    "source_code": "for (i=0; s[i]; i++) switch (s[i]) {\n\tcase '\\\\':\n\t\tif (!sq && !s[++i]) return WRDE_SYNTAX;\n\t\tbreak;\n\tcase '\\'':\n\t\tif (!dq) sq^=1;\n\t\tbreak;\n\tcase '\"':\n\t\tif (!sq) dq^=1;\n\t\tbreak;\n\tcase '(':\n\t\tif (np) {\n\t\t\tnp++;\n\t\t\tbreak;\n\t\t}\n\tcase ')':\n\t\tif (np) {\n\t\t\tnp--;\n\t\t\tbreak;\n\t\t}\n\tcase '\\n':\n\tcase '|':\n\tcase '&':\n\tcase ';':\n\tcase '<':\n\tcase '>':\n\tcase '{':\n\tcase '}':\n\t\tif (!(sq|dq|np)) return WRDE_BADCHAR;\n\t\tbreak;\n\tcase '$':\n\t\tif (sq) break;\n\t\tif (s[i+1]=='(' && s[i+2]=='(') {\n\t\t\ti += 2;\n\t\t\tnp += 2;\n\t\t\tbreak;\n\t\t} else if (s[i+1] != '(') break;\n\tcase '`':\n\t\tif (sq) break;\n\t\treturn WRDE_CMDSUB;\n\t}\n",
+    "abstract_code": "for (i=0; arr_s[i]; i++) switch (arr_s[i]) {\n\tcase '\\\\':\n\t\tif (!sq && !arr_s[++i]) return WRDE_SYNTAX;\n\t\tbreak;\n\tcase '\\'':\n\t\tif (!dq) sq^=1;\n\t\tbreak;\n\tcase '\"':\n\t\tif (!sq) dq^=1;\n\t\tbreak;\n\tcase '(':\n\t\tif (np) {\n\t\t\tnp++;\n\t\t\tbreak;\n\t\t}\n\tcase ')':\n\t\tif (np) {\n\t\t\tnp--;\n\t\t\tbreak;\n\t\t}\n\tcase '\\n':\n\tcase '|':\n\tcase '&':\n\tcase ';':\n\tcase '<':\n\tcase '>':\n\tcase '{':\n\tcase '}':\n\t\tif (!(sq|dq|np)) return WRDE_BADCHAR;\n\t\tbreak;\n\tcase '$':\n\t\tif (sq) break;\n\t\tif (arr_s[i+1]=='(' && arr_s[i+2]=='(') {\n\t\t\ti += 2;\n\t\t\tnp += 2;\n\t\t\tbreak;\n\t\t} else if (arr_s[i+1] != '(') break;\n\tcase '`':\n\t\tif (sq) break;\n\t\treturn WRDE_CMDSUB;\n\t}\n",
+    "ptr_map": {
+      "s": "s_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/misc/basename.c",
+    "line": 9,
+    "column": 2,
+    "source_code": "for (; i&&s[i]=='/'; i--) s[i] = 0;",
+    "abstract_code": "for (; i&&arr_s[i]=='/'; i--) arr_s[i] = 0;",
+    "ptr_map": {
+      "s": "s_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/misc/basename.c",
+    "line": 10,
+    "column": 2,
+    "source_code": "for (; i&&s[i-1]!='/'; i--);\n",
+    "abstract_code": "for (; i&&arr_s[i-1]!='/'; i--);\n",
+    "ptr_map": {
+      "s": "s_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/misc/nftw.c",
+    "line": 65,
+    "column": 3,
+    "source_code": "for (k=j; k && path[k]=='/'; k--);\n",
+    "abstract_code": "for (k=j; k && arr_path[k]=='/'; k--);\n",
+    "ptr_map": {
+      "path": "path_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/misc/nftw.c",
+    "line": 66,
+    "column": 3,
+    "source_code": "for (; k && path[k-1]!='/'; k--);\n",
+    "abstract_code": "for (; k && arr_path[k-1]!='/'; k--);\n",
+    "ptr_map": {
+      "path": "path_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/misc/dirname.c",
+    "line": 9,
+    "column": 2,
+    "source_code": "for (; s[i]=='/'; i--) if (!i) return \"/\";",
+    "abstract_code": "for (; arr_s[i]=='/'; i--) if (!i) return \"/\";",
+    "ptr_map": {
+      "s": "s_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/misc/dirname.c",
+    "line": 10,
+    "column": 2,
+    "source_code": "for (; s[i]!='/'; i--) if (!i) return \".\";",
+    "abstract_code": "for (; arr_s[i]!='/'; i--) if (!i) return \".\";",
+    "ptr_map": {
+      "s": "s_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/misc/dirname.c",
+    "line": 11,
+    "column": 2,
+    "source_code": "for (; s[i]=='/'; i--) if (!i) return \"/\";",
+    "abstract_code": "for (; arr_s[i]=='/'; i--) if (!i) return \"/\";",
+    "ptr_map": {
+      "s": "s_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/misc/fmtmsg.c",
+    "line": 19,
+    "column": 2,
+    "source_code": "while (lstr[i] && bstr[i] && (bstr[i] == lstr[i])) i++;",
+    "abstract_code": "while (arr_lstr[i] && arr_bstr[i] && (arr_bstr[i] == arr_lstr[i])) i++;",
+    "ptr_map": {
+      "bstr": "bstr_idx",
+      "lstr": "lstr_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/misc/getopt_long.c",
+    "line": 17,
+    "column": 2,
+    "source_code": "for (i=src; i>dest; i--)\n\t\tav[i] = av[i-1];",
+    "abstract_code": "for (i=src; i>dest; i--)\n\t\tarr_av[i] = arr_av[i-1];",
+    "ptr_map": {
+      "av": "av_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/misc/getopt_long.c",
+    "line": 36,
+    "column": 3,
+    "source_code": "for (i=optind; ; i++) {\n\t\t\tif (i >= argc || !argv[i]) return -1;\n\t\t\tif (argv[i][0] == '-' && argv[i][1]) break;\n\t\t}\n",
+    "abstract_code": "for (i=optind; ; i++) {\n\t\t\tif (i >= argc || !arr_argv[i]) return -1;\n\t\t\tif (arr_argv[i][0] == '-' && arr_argv[i][1]) break;\n\t\t}\n",
+    "ptr_map": {
+      "argv": "argv_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/misc/getopt_long.c",
+    "line": 82,
+    "column": 5,
+    "source_code": "for (j=0; j<l && start[j]==optstring[i+j]; j++);\n",
+    "abstract_code": "for (j=0; j<l && arr_start[j]==arr_optstring[i+j]; j++);\n",
+    "ptr_map": {
+      "start": "start_idx",
+      "optstring": "optstring_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/misc/realpath.c",
+    "line": 106,
+    "column": 5,
+    "source_code": "while(q && output[q-1]!='/') q--;",
+    "abstract_code": "while(q && arr_output[q-1]!='/') q--;",
+    "ptr_map": {
+      "output": "output_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/misc/realpath.c",
+    "line": 121,
+    "column": 24,
+    "source_code": "while (stack[p]=='/') p++;",
+    "abstract_code": "while (arr_stack[p]=='/') p++;",
+    "ptr_map": {
+      "stack": "stack_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/misc/realpath.c",
+    "line": 138,
+    "column": 4,
+    "source_code": "while(l>1 && stack[l-1]!='/') l--;",
+    "abstract_code": "while(l>1 && arr_stack[l-1]!='/') l--;",
+    "ptr_map": {
+      "stack": "stack_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/time/wcsftime.c",
+    "line": 44,
+    "column": 4,
+    "source_code": "for (; *t=='+' || *t=='-' || (*t=='0'&&t[1]); t++, k--);\n",
+    "abstract_code": "for (; arr_t[t_idx]=='+' || arr_t[t_idx]=='-' || (arr_t[t_idx]=='0'&&arr_t[1]); t_idx++, k--);\n",
+    "ptr_map": {
+      "t": "t_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/time/wcsftime.c",
+    "line": 52,
+    "column": 4,
+    "source_code": "for (; width > k && l < n; width--)\n\t\t\t\ts[l++] = '0';",
+    "abstract_code": "for (; width > k && l < n; width--)\n\t\t\t\tarr_s[l++] = '0';",
+    "ptr_map": {
+      "s": "s_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/time/__secs_to_tm.c",
+    "line": 60,
+    "column": 2,
+    "source_code": "for (months=0; days_in_month[months] <= remdays; months++)\n\t\tremdays -= days_in_month[months];",
+    "abstract_code": "for (months=0; arr_days_in_month[months] <= remdays; months++)\n\t\tremdays -= arr_days_in_month[months];",
+    "ptr_map": {
+      "days_in_month": "days_in_month_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/time/strftime.c",
+    "line": 257,
+    "column": 4,
+    "source_code": "for (; *t=='0' && t[1]-'0'<10U; t++, k--);\n",
+    "abstract_code": "for (; arr_t[t_idx]=='0' && arr_t[1]-'0'<10U; t_idx++, k--);\n",
+    "ptr_map": {
+      "t": "t_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/time/strftime.c",
+    "line": 260,
+    "column": 4,
+    "source_code": "for (d=0; t[d]-'0'<10U; d++);\n",
+    "abstract_code": "for (d=0; arr_t[d]-'0'<10U; d++);\n",
+    "ptr_map": {
+      "t": "t_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/time/strftime.c",
+    "line": 268,
+    "column": 4,
+    "source_code": "for (; width > k && l < n; width--)\n\t\t\t\ts[l++] = '0';",
+    "abstract_code": "for (; width > k && l < n; width--)\n\t\t\t\tarr_s[l++] = '0';",
+    "ptr_map": {
+      "s": "s_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/time/__tz.c",
+    "line": 97,
+    "column": 3,
+    "source_code": "for (i=0; (*p)[i] && (*p)[i]!='>'; i++)\n\t\t\tif (i<TZNAME_MAX) d[i] = (*p)[i];",
+    "abstract_code": "for (i=0; (*p)[i] && (*p)[i]!='>'; i++)\n\t\t\tif (i<TZNAME_MAX) arr_d[i] = (*p)[i];",
+    "ptr_map": {
+      "d": "d_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/time/__tz.c",
+    "line": 101,
+    "column": 3,
+    "source_code": "for (i=0; ((*p)[i]|32)-'a'<26U; i++)\n\t\t\tif (i<TZNAME_MAX) d[i] = (*p)[i];",
+    "abstract_code": "for (i=0; ((*p)[i]|32)-'a'<26U; i++)\n\t\t\tif (i<TZNAME_MAX) arr_d[i] = (*p)[i];",
+    "ptr_map": {
+      "d": "d_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/time/__tz.c",
+    "line": 141,
+    "column": 2,
+    "source_code": "for (i=0; i<5; i++) r0[i] = r1[i] = 0;",
+    "abstract_code": "for (i=0; i<5; i++) arr_r0[i] = arr_r1[i] = 0;",
+    "ptr_map": {
+      "r1": "r1_idx",
+      "r0": "r0_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/sched/sched_cpucount.c",
+    "line": 8,
+    "column": 25,
+    "source_code": "for (j=0; j<8; j++)\n\t\tif (p[i] & (1<<j)) cnt++;",
+    "abstract_code": "for (j=0; j<8; j++)\n\t\tif (arr_p[i] & (1<<j)) cnt++;",
+    "ptr_map": {
+      "p": "p_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/malloc/mallocng/malloc.c",
+    "line": 185,
+    "column": 3,
+    "source_code": "while (i<2 && 4*small_cnt_tab[sc][i] > usage)\n\t\t\ti++;",
+    "abstract_code": "while (i<2 && 4arr_small_cnt_tab[small_cnt_tab_idx][sc][i] > usage)\n\t\t\ti++;",
+    "ptr_map": {
+      "small_cnt_tab": "small_cnt_tab_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/malloc/mallocng/malloc.c",
+    "line": 270,
+    "column": 3,
+    "source_code": "for (int i=0; i<=cnt; i++)\n\t\t\tp[UNIT+i*size-4] = 0;",
+    "abstract_code": "for (int i=0; i<=cnt; i++)\n\t\t\tarr_p[UNIT+i*size-4] = 0;",
+    "ptr_map": {
+      "p": "p_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/stdlib/ecvt.c",
+    "line": 14,
+    "column": 2,
+    "source_code": "for (j=0; tmp[i]!='e'; j+=(tmp[i++]!='.'))\n\t\tbuf[j] = tmp[i];",
+    "abstract_code": "for (j=0; arr_tmp[i]!='e'; j+=(arr_tmp[i++]!='.'))\n\t\tarr_buf[j] = arr_tmp[i];",
+    "ptr_map": {
+      "buf": "buf_idx",
+      "tmp": "tmp_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/stdlib/qsort.c",
+    "line": 173,
+    "column": 2,
+    "source_code": "for(lp[0]=lp[1]=width, i=2; (lp[i]=lp[i-2]+lp[i-1]+width) < size; i++);\n",
+    "abstract_code": "for(arr_lp[0]=arr_lp[1]=width, i=2; (arr_lp[i]=arr_lp[i-2]+arr_lp[i-1]+width) < size; i++);\n",
+    "ptr_map": {
+      "lp": "lp_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/regex/glob.c",
+    "line": 43,
+    "column": 2,
+    "source_code": "while (pos+1 < PATH_MAX && *pat=='/') buf[pos++] = *pat++;",
+    "abstract_code": "while (pos+1 < PATH_MAX && *pat=='/') arr_buf[pos++] = *pat++;",
+    "ptr_map": {
+      "buf": "buf_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/regex/glob.c",
+    "line": 49,
+    "column": 2,
+    "source_code": "for (; pat[i]!='*' && pat[i]!='?' && (!in_bracket || pat[i]!=']'); i++) {\n\t\tif (!pat[i]) {\n\t\t\tif (overflow) return 0;\n\t\t\tpat += i;\n\t\t\tpos += j;\n\t\t\ti = j = 0;\n\t\t\tbreak;\n\t\t} else if (pat[i] == '[') {\n\t\t\tin_bracket = 1;\n\t\t} else if (pat[i] == '\\\\' && !(flags & GLOB_NOESCAPE)) {\n\t\t\t/* Backslashes inside a bracket are (at least by\n\t\t\t * our interpretation) non-special, so if next\n\t\t\t * char is ']' we have a complete expression. */\n\t\t\tif (in_bracket && pat[i+1]==']') break;\n\t\t\t/* Unpaired final backslash never matches. */\n\t\t\tif (!pat[i+1]) return 0;\n\t\t\ti++;\n\t\t}\n\t\tif (pat[i] == '/') {\n\t\t\tif (overflow) return 0;\n\t\t\tin_bracket = 0;\n\t\t\tpat += i+1;\n\t\t\ti = -1;\n\t\t\tpos += j+1;\n\t\t\tj = -1;\n\t\t}\n\t\t/* Only store a character if it fits in the buffer, but if\n\t\t * a potential bracket expression is open, the overflow\n\t\t * must be remembered and handled later only if the bracket\n\t\t * is unterminated (and thereby a literal), so as not to\n\t\t * disallow long bracket expressions with short matches. */\n\t\tif (pos+(j+1) < PATH_MAX) {\n\t\t\tbuf[pos+j++] = pat[i];\n\t\t} else if (in_bracket) {\n\t\t\toverflow = 1;\n\t\t} else {\n\t\t\treturn 0;\n\t\t}\n\t\t/* If we consume any new components, the caller-passed type\n\t\t * or dummy type from above is no longer valid. */\n\t\ttype = 0;\n\t}\n",
+    "abstract_code": "for (; arr_pat[i]!='*' && arr_pat[i]!='?' && (!in_bracket || arr_pat[i]!=']'); i++) {\n\t\tif (!arr_pat[i]) {\n\t\t\tif (overflow) return 0;\n\t\t\tpat += i;\n\t\t\tpos += j;\n\t\t\ti = j = 0;\n\t\t\tbreak;\n\t\t} else if (arr_pat[i] == '[') {\n\t\t\tin_bracket = 1;\n\t\t} else if (arr_pat[i] == '\\\\' && !(flags & GLOB_NOESCAPE)) {\n\t\t\t/* Backslashes inside a bracket are (at least by\n\t\t\t * our interpretation) non-special, so if next\n\t\t\t * char is ']' we have a complete expression. */\n\t\t\tif (in_bracket && arr_pat[i+1]==']') break;\n\t\t\t/* Unpaired final backslash never matches. */\n\t\t\tif (!arr_pat[i+1]) return 0;\n\t\t\ti++;\n\t\t}\n\t\tif (arr_pat[i] == '/') {\n\t\t\tif (overflow) return 0;\n\t\t\tin_bracket = 0;\n\t\t\tpat += i+1;\n\t\t\ti = -1;\n\t\t\tpos += j+1;\n\t\t\tj = -1;\n\t\t}\n\t\t/* Only store a character if it fits in the buffer, but if\n\t\t * a potential bracket expression is open, the overflow\n\t\t * must be remembered and handled later only if the bracket\n\t\t * is unterminated (and thereby a literal), so as not to\n\t\t * disallow long bracket expressions with short matches. */\n\t\tif (pos+(j+1) < PATH_MAX) {\n\t\t\tarr_buf[pos+j++] = arr_pat[i];\n\t\t} else if (in_bracket) {\n\t\t\toverflow = 1;\n\t\t} else {\n\t\t\treturn 0;\n\t\t}\n\t\t/* If we consume any new components, the caller-passed type\n\t\t * or dummy type from above is no longer valid. */\n\t\ttype = 0;\n\t}\n",
+    "ptr_map": {
+      "pat": "pat_idx",
+      "buf": "buf_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/regex/glob.c",
+    "line": 217,
+    "column": 2,
+    "source_code": "while (i < PATH_MAX - 2 && *home)\n\t\tbuf[i++] = *home++;",
+    "abstract_code": "while (i < PATH_MAX - 2 && *home)\n\t\tarr_buf[i++] = *home++;",
+    "ptr_map": {
+      "buf": "buf_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/regex/regexec.c",
+    "line": 103,
+    "column": 3,
+    "source_code": "for (i = 0; i < num_tags; i++)\n    {\n      if (tag_directions[i] == TRE_TAG_MINIMIZE)\n\t{\n\t  if (t1[i] < t2[i])\n\t    return 1;\n\t  if (t1[i] > t2[i])\n\t    return 0;\n\t}\n      else\n\t{\n\t  if (t1[i] > t2[i])\n\t    return 1;\n\t  if (t1[i] < t2[i])\n\t    return 0;\n\t}\n    }\n",
+    "abstract_code": "for (i = 0; i < num_tags; i++)\n    {\n      if (arr_tag_directions[i] == TRE_TAG_MINIMIZE)\n\t{\n\t  if (arr_t1[i] < arr_t2[i])\n\t    return 1;\n\t  if (arr_t1[i] > arr_t2[i])\n\t    return 0;\n\t}\n      else\n\t{\n\t  if (arr_t1[i] > arr_t2[i])\n\t    return 1;\n\t  if (arr_t1[i] < arr_t2[i])\n\t    return 0;\n\t}\n    }\n",
+    "ptr_map": {
+      "t1": "t1_idx",
+      "tag_directions": "tag_directions_idx",
+      "t2": "t2_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/regex/regexec.c",
+    "line": 397,
+    "column": 7,
+    "source_code": "while (*tag_i >= 0)\n\t\t      {\n\t\t\tif (*tag_i < num_tags)\n\t\t\t  tmp_tags[*tag_i] = pos;\n\t\t\ttag_i++;\n\t\t      }\n",
+    "abstract_code": "while (*tag_i >= 0)\n\t\t      {\n\t\t\tif (*tag_i < num_tags)\n\t\t\t  arr_tmp_tags[*tag_i] = pos;\n\t\t\ttag_i++;\n\t\t      }\n",
+    "ptr_map": {
+      "tmp_tags": "tmp_tags_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/regex/regexec.c",
+    "line": 444,
+    "column": 10,
+    "source_code": "for (i = 0; i < num_tags; i++)\n\t\t\t\tmatch_tags[i] = tmp_tags[i];",
+    "abstract_code": "for (i = 0; i < num_tags; i++)\n\t\t\t\tarr_match_tags[i] = arr_tmp_tags[i];",
+    "ptr_map": {
+      "match_tags": "match_tags_idx",
+      "tmp_tags": "tmp_tags_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/regex/regexec.c",
+    "line": 732,
+    "column": 5,
+    "source_code": "for (; *next_tags >= 0; next_tags++)\n      tags[*next_tags] = pos;",
+    "abstract_code": "for (; *next_tags >= 0; next_tags++)\n      arr_tags[*next_tags] = pos;",
+    "ptr_map": {
+      "tags": "tags_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/regex/regexec.c",
+    "line": 868,
+    "column": 6,
+    "source_code": "while (*next_tags >= 0)\n\t      tags[*next_tags++] = pos;",
+    "abstract_code": "while (*next_tags >= 0)\n\t      arr_tags[*next_tags++] = pos;",
+    "ptr_map": {
+      "tags": "tags_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/regex/regcomp.c",
+    "line": 1275,
+    "column": 6,
+    "source_code": "for (i = 0; regset[i] >= 0; i++);\n",
+    "abstract_code": "for (i = 0; arr_regset[i] >= 0; i++);\n",
+    "ptr_map": {
+      "regset": "regset_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/regex/regcomp.c",
+    "line": 1280,
+    "column": 6,
+    "source_code": "for (i = 0; parents[i] >= 0; i++);\n",
+    "abstract_code": "for (i = 0; arr_parents[i] >= 0; i++);\n",
+    "ptr_map": {
+      "parents": "parents_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/regex/regcomp.c",
+    "line": 1295,
+    "column": 8,
+    "source_code": "for (i = 0; regset[i] >= 0; i++);\n",
+    "abstract_code": "for (i = 0; arr_regset[i] >= 0; i++);\n",
+    "ptr_map": {
+      "regset": "regset_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/regex/regcomp.c",
+    "line": 1301,
+    "column": 5,
+    "source_code": "for (i = 0; parents[i] >= 0; i++);\n",
+    "abstract_code": "for (i = 0; arr_parents[i] >= 0; i++);\n",
+    "ptr_map": {
+      "parents": "parents_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/regex/regcomp.c",
+    "line": 1313,
+    "column": 9,
+    "source_code": "for (i = 0; parents[i] >= 0; i++)\n\t\t\tp[i] = parents[i];",
+    "abstract_code": "for (i = 0; arr_parents[i] >= 0; i++)\n\t\t\tarr_p[i] = arr_parents[i];",
+    "ptr_map": {
+      "p": "p_idx",
+      "parents": "parents_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/regex/regcomp.c",
+    "line": 1535,
+    "column": 8,
+    "source_code": "for (i = 0; parents[i] >= 0; i++);\n",
+    "abstract_code": "for (i = 0; arr_parents[i] >= 0; i++);\n",
+    "ptr_map": {
+      "parents": "parents_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/regex/regcomp.c",
+    "line": 2094,
+    "column": 4,
+    "source_code": "for (i = 0; i < num_tags; i++)\n\t    new_tags[j + i] = tags[i];",
+    "abstract_code": "for (i = 0; i < num_tags; i++)\n\t    arr_new_tags[j + i] = arr_tags[i];",
+    "ptr_map": {
+      "new_tags": "new_tags_idx",
+      "tags": "tags_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/regex/fnmatch.c",
+    "line": 72,
+    "column": 5,
+    "source_code": "while (k<m && pat[k] && (pat[k-1]!=z || pat[k]!=']')) k++;",
+    "abstract_code": "while (k<m && arr_pat[k] && (arr_pat[k-1]!=z || arr_pat[k]!=']')) k++;",
+    "ptr_map": {
+      "pat": "pat_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/regex/fnmatch.c",
+    "line": 140,
+    "column": 4,
+    "source_code": "while (p[-1]!=z || p[0]!=']') p++;",
+    "abstract_code": "while (arr_p[-1]!=z || arr_p[0]!=']') p_idx++;",
+    "ptr_map": {
+      "p": "p_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/locale/iconv.c",
+    "line": 212,
+    "column": 2,
+    "source_code": "for (;;) {\n\t\ti = nel/2;\n\t\tj = rev_jis[b+i];\n\t\td = jis0208[j/256][j%256];\n\t\tif (d==c) return j + 0x2121;\n\t\telse if (nel == 1) return 0;\n\t\telse if (c < d)\n\t\t\tnel /= 2;\n\t\telse {\n\t\t\tb += i;\n\t\t\tnel -= nel/2;\n\t\t}\n\t}\n",
+    "abstract_code": "for (;;) {\n\t\ti = nel/2;\n\t\tj = arr_rev_jis[b+i];\n\t\td = arr_jis0208[j/256][j%256];\n\t\tif (d==c) return j + 0x2121;\n\t\telse if (nel == 1) return 0;\n\t\telse if (c < d)\n\t\t\tnel /= 2;\n\t\telse {\n\t\t\tb += i;\n\t\t\tnel -= nel/2;\n\t\t}\n\t}\n",
+    "ptr_map": {
+      "jis0208": "jis0208_idx",
+      "rev_jis": "rev_jis_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/locale/iconv.c",
+    "line": 430,
+    "column": 7,
+    "source_code": "for (int j=0; j<190; j++)\n\t\t\t\t\t\t\tif (gb18030[i][j]-d <= c-d)\n\t\t\t\t\t\t\t\tk++;",
+    "abstract_code": "for (int j=0; j<190; j++)\n\t\t\t\t\t\t\tif (arr_gb18030[i][j]-d <= c-d)\n\t\t\t\t\t\t\t\tk++;",
+    "ptr_map": {
+      "gb18030": "gb18030_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/locale/iconv.c",
+    "line": 510,
+    "column": 7,
+    "source_code": "for (int j=0; j<94; j++)\n\t\t\t\t\t\t\tif (ksc[i][j]-d <= c-d)\n\t\t\t\t\t\t\t\tk++;",
+    "abstract_code": "for (int j=0; j<94; j++)\n\t\t\t\t\t\t\tif (arr_ksc[i][j]-d <= c-d)\n\t\t\t\t\t\t\t\tk++;",
+    "ptr_map": {
+      "ksc": "ksc_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/passwd/getgrent_a.c",
+    "line": 56,
+    "column": 3,
+    "source_code": "for (s=mems, i=0; *s; s++)\n\t\t\tif (*s==',') *s++ = 0, mem[0][++i] = s;",
+    "abstract_code": "for (s=mems, i=0; *s; s++)\n\t\t\tif (*s==',') *s++ = 0, arr_mem[0][++i] = s;",
+    "ptr_map": {
+      "mem": "mem_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/passwd/getgrouplist.c",
+    "line": 66,
+    "column": 3,
+    "source_code": "for(i=0; i < resp[INITGRNGRPS]; i++) {\n\t\t\tif (nscdbuf[i] != gid)\n\t\t\t\tif(++n <= nlim) *groups++ = nscdbuf[i];\n\t\t}\n",
+    "abstract_code": "for(i=0; i < arr_resp[INITGRNGRPS]; i++) {\n\t\t\tif (arr_nscdbuf[i] != gid)\n\t\t\t\tif(++n <= nlim) *groups++ = arr_nscdbuf[i];\n\t\t}\n",
+    "ptr_map": {
+      "nscdbuf": "nscdbuf_idx",
+      "resp": "resp_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/passwd/getgr_a.c",
+    "line": 129,
+    "column": 4,
+    "source_code": "for (ptr = mem[0][0], i = 0; ptr != mem[0][0]+grlist_len; ptr++)\n\t\t\t\tif (!*ptr) mem[0][++i] = ptr+1;",
+    "abstract_code": "for (ptr = arr_mem[0][0], i = 0; ptr != arr_mem[0][0]+grlist_len; ptr++)\n\t\t\t\tif (!*ptr) arr_mem[0][++i] = ptr+1;",
+    "ptr_map": {
+      "mem": "mem_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/ctype/towctrans.c",
+    "line": 44,
+    "column": 2,
+    "source_code": "while (xn) {\n\t\tunsigned try = exceptions[xb+xn/2][0];\n\t\tif (try == c) {\n\t\t\tr = rules[exceptions[xb+xn/2][1]];\n\t\t\trt = r & 255;\n\t\t\trd = r >> 8;\n\t\t\tif (rt < 2) return c0 + (rd & -(rt^dir));\n\t\t\t/* Hard-coded for the four exceptional titlecase */\n\t\t\treturn c0 + (dir ? -1 : 1);\n\t\t} else if (try > c) {\n\t\t\txn /= 2;\n\t\t} else {\n\t\t\txb += xn/2;\n\t\t\txn -= xn/2;\n\t\t}\n\t}\n",
+    "abstract_code": "while (xn) {\n\t\tunsigned try = arr_exceptions[xb+xn/2][0];\n\t\tif (try == c) {\n\t\t\tr = arr_rules[arr_exceptions[xb+xn/2][1]];\n\t\t\trt = r & 255;\n\t\t\trd = r >> 8;\n\t\t\tif (rt < 2) return c0 + (rd & -(rt^dir));\n\t\t\t/* Hard-coded for the four exceptional titlecase */\n\t\t\treturn c0 + (dir ? -1 : 1);\n\t\t} else if (try > c) {\n\t\t\txn /= 2;\n\t\t} else {\n\t\t\txb += xn/2;\n\t\t\txn -= xn/2;\n\t\t}\n\t}\n",
+    "ptr_map": {
+      "exceptions": "exceptions_idx",
+      "rules": "rules_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/process/execl.c",
+    "line": 16,
+    "column": 3,
+    "source_code": "for (i=1; i<argc; i++)\n\t\t\targv[i] = va_arg(ap, char *);",
+    "abstract_code": "for (i=1; i<argc; i++)\n\t\t\tarr_argv[i] = va_arg(ap, char *);",
+    "ptr_map": {
+      "argv": "argv_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/process/execle.c",
+    "line": 17,
+    "column": 3,
+    "source_code": "for (i=1; i<=argc; i++)\n\t\t\targv[i] = va_arg(ap, char *);",
+    "abstract_code": "for (i=1; i<=argc; i++)\n\t\t\tarr_argv[i] = va_arg(ap, char *);",
+    "ptr_map": {
+      "argv": "argv_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/process/execlp.c",
+    "line": 16,
+    "column": 3,
+    "source_code": "for (i=1; i<argc; i++)\n\t\t\targv[i] = va_arg(ap, char *);",
+    "abstract_code": "for (i=1; i<argc; i++)\n\t\t\tarr_argv[i] = va_arg(ap, char *);",
+    "ptr_map": {
+      "argv": "argv_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/aio/aio.c",
+    "line": 426,
+    "column": 23,
+    "source_code": "for (int d=0; d<256; d++)\n\t\t\t\t\tmap[a][b][c][d] = 0;",
+    "abstract_code": "for (int d=0; d<256; d++)\n\t\t\t\t\tarr_map[a][b][c][d] = 0;",
+    "ptr_map": {
+      "map": "map_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/network/getnameinfo.c",
+    "line": 38,
+    "column": 2,
+    "source_code": "for (i=15; i>=0; i--) {\n\t\t*s++ = xdigits[ip[i]&15]; *s++ = '.';\n\t\t*s++ = xdigits[ip[i]>>4]; *s++ = '.';\n\t}\n",
+    "abstract_code": "for (i=15; i>=0; i--) {\n\t\t*s++ = arr_xdigits[arr_ip[i]&15]; *s++ = '.';\n\t\t*s++ = arr_xdigits[arr_ip[i]>>4]; *s++ = '.';\n\t}\n",
+    "ptr_map": {
+      "xdigits": "xdigits_idx",
+      "ip": "ip_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/network/res_mkquery.c",
+    "line": 28,
+    "column": 3,
+    "source_code": "for (j=i; q[j] && q[j] != '.'; j++);\n",
+    "abstract_code": "for (j=i; arr_q[j] && arr_q[j] != '.'; j++);\n",
+    "ptr_map": {
+      "q": "q_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/network/dn_comp.c",
+    "line": 27,
+    "column": 3,
+    "source_code": "for (; j<l && s[j]!='.'; j++);\n",
+    "abstract_code": "for (; j<l && arr_s[j]!='.'; j++);\n",
+    "ptr_map": {
+      "s": "s_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/network/dn_comp.c",
+    "line": 88,
+    "column": 2,
+    "source_code": "for (i=j=0; i<l-bestlen; i+=lens[j++]+1)\n\t\tdst[i] = lens[j];",
+    "abstract_code": "for (i=j=0; i<l-bestlen; i+=arr_lens[j++]+1)\n\t\tarr_dst[i] = arr_lens[j];",
+    "ptr_map": {
+      "dst": "dst_idx",
+      "lens": "lens_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/network/res_msend.c",
+    "line": 181,
+    "column": 3,
+    "source_code": "for (i=0; i<nqueries && alens[i]>0; i++);\n",
+    "abstract_code": "for (i=0; i<nqueries && arr_alens[i]>0; i++);\n",
+    "ptr_map": {
+      "alens": "alens_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/network/res_msend.c",
+    "line": 220,
+    "column": 4,
+    "source_code": "for (i=next; i<nqueries && (\n\t\t\t\tanswers[next][0] != queries[i][0] ||\n\t\t\t\tanswers[next][1] != queries[i][1] ); i++);\n",
+    "abstract_code": "for (i=next; i<nqueries && (\n\t\t\t\tarr_answers[next][0] != arr_queries[i][0] ||\n\t\t\t\tarr_answers[next][1] != arr_queries[i][1] ); i++);\n",
+    "ptr_map": {
+      "queries": "queries_idx",
+      "answers": "answers_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/network/res_msend.c",
+    "line": 246,
+    "column": 5,
+    "source_code": "for (; next<nqueries && alens[next]; next++);\n",
+    "abstract_code": "for (; next<nqueries && arr_alens[next]; next++);\n",
+    "ptr_map": {
+      "alens": "alens_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/network/res_msend.c",
+    "line": 314,
+    "column": 2,
+    "source_code": "for (i=0; i<nqueries; i++) if (alens[i]<0) alens[i] = 0;",
+    "abstract_code": "for (i=0; i<nqueries; i++) if (arr_alens[i]<0) arr_alens[i] = 0;",
+    "ptr_map": {
+      "alens": "alens_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/network/lookup_name.c",
+    "line": 174,
+    "column": 2,
+    "source_code": "for (i=0; i<nq; i++) {\n\t\tif (alens[i] < 4 || (abuf[i][3] & 15) == 2) return EAI_AGAIN;\n\t\tif ((abuf[i][3] & 15) == 3) return 0;\n\t\tif ((abuf[i][3] & 15) != 0) return EAI_FAIL;\n\t}\n",
+    "abstract_code": "for (i=0; i<nq; i++) {\n\t\tif (arr_alens[i] < 4 || (arr_abuf[i][3] & 15) == 2) return EAI_AGAIN;\n\t\tif ((arr_abuf[i][3] & 15) == 3) return 0;\n\t\tif ((arr_abuf[i][3] & 15) != 0) return EAI_FAIL;\n\t}\n",
+    "ptr_map": {
+      "alens": "alens_idx",
+      "abuf": "abuf_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/network/lookup_name.c",
+    "line": 201,
+    "column": 2,
+    "source_code": "for (dots=l=0; name[l]; l++) if (name[l]=='.') dots++;",
+    "abstract_code": "for (dots=l=0; arr_name[l]; l++) if (arr_name[l]=='.') dots++;",
+    "ptr_map": {
+      "name": "name_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/network/inet_aton.c",
+    "line": 34,
+    "column": 2,
+    "source_code": "for (i=0; i<4; i++) {\n\t\tif (a[i] > 255) return 0;\n\t\td[i] = a[i];\n\t}\n",
+    "abstract_code": "for (i=0; i<4; i++) {\n\t\tif (arr_a[i] > 255) return 0;\n\t\tarr_d[i] = arr_a[i];\n\t}\n",
+    "ptr_map": {
+      "a": "a_idx",
+      "d": "d_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/network/inet_pton.c",
+    "line": 64,
+    "column": 3,
+    "source_code": "for (j=0; j<7-i; j++) ip[brk+j] = 0;",
+    "abstract_code": "for (j=0; j<7-i; j++) arr_ip[brk+j] = 0;",
+    "ptr_map": {
+      "ip": "ip_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/network/inet_pton.c",
+    "line": 66,
+    "column": 2,
+    "source_code": "for (j=0; j<8; j++) {\n\t\t*a++ = ip[j]>>8;\n\t\t*a++ = ip[j];\n\t}\n",
+    "abstract_code": "for (j=0; j<8; j++) {\n\t\t*a++ = arr_ip[j]>>8;\n\t\t*a++ = arr_ip[j];\n\t}\n",
+    "ptr_map": {
+      "ip": "ip_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/conf/sysconf.c",
+    "line": 208,
+    "column": 4,
+    "source_code": "for (; set[i]; set[i]&=set[i]-1, cnt++);\n",
+    "abstract_code": "for (; arr_set[i]; arr_set[i]&=arr_set[i]-1, cnt++);\n",
+    "ptr_map": {
+      "set": "set_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/math/__rem_pio2.c",
+    "line": 179,
+    "column": 2,
+    "source_code": "while (tx[i] == 0.0)\n\t\ti--;",
+    "abstract_code": "while (arr_tx[i] == 0.0)\n\t\ti--;",
+    "ptr_map": {
+      "tx": "tx_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/crypt/encrypt.c",
+    "line": 16,
+    "column": 3,
+    "source_code": "for (j = 7; j >= 0; j--, key++)\n\t\t\tbkey[i] |= (uint32_t)(*key & 1) << j;",
+    "abstract_code": "for (j = 7; j >= 0; j--, key++)\n\t\t\tarr_bkey[i] |= (uint32_t)(*key & 1) << j;",
+    "ptr_map": {
+      "bkey": "bkey_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/crypt/encrypt.c",
+    "line": 33,
+    "column": 3,
+    "source_code": "for (j = 31; j >= 0; j--, p++)\n\t\t\tb[i] |= (uint32_t)(*p & 1) << j;",
+    "abstract_code": "for (j = 31; j >= 0; j--, p++)\n\t\t\tarr_b[i] |= (uint32_t)(*p & 1) << j;",
+    "ptr_map": {
+      "b": "b_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/crypt/encrypt.c",
+    "line": 50,
+    "column": 3,
+    "source_code": "for (j = 31; j >= 0; j--)\n\t\t\t*p++ = b[i]>>j & 1;",
+    "abstract_code": "for (j = 31; j >= 0; j--)\n\t\t\t*p++ = arr_b[i]>>j & 1;",
+    "ptr_map": {
+      "b": "b_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/crypt/crypt_blowfish.c",
+    "line": 547,
+    "column": 3,
+    "source_code": "for (j = 0; j < 4; j++) {\n\t\t\ttmp[0] <<= 8;\n\t\t\ttmp[0] |= (unsigned char)*ptr; /* correct */\n\t\t\ttmp[1] <<= 8;\n\t\t\ttmp[1] |= (signed char)*ptr; /* bug */\n/*\n * Sign extension in the first char has no effect - nothing to overwrite yet,\n * and those extra 24 bits will be fully shifted out of the 32-bit word.  For\n * chars 2, 3, 4 in each four-char block, we set bit 7 of \"sign\" if sign\n * extension in tmp[1] occurs.  Once this flag is set, it remains set.\n */\n\t\t\tif (j)\n\t\t\t\tsign |= tmp[1] & 0x80;\n\t\t\tif (!*ptr)\n\t\t\t\tptr = key;\n\t\t\telse\n\t\t\t\tptr++;\n\t\t}\n",
+    "abstract_code": "for (j = 0; j < 4; j++) {\n\t\t\tarr_tmp[0] <<= 8;\n\t\t\tarr_tmp[0] |= (unsigned char)*ptr; /* correct */\n\t\t\tarr_tmp[1] <<= 8;\n\t\t\tarr_tmp[1] |= (signed char)*ptr; /* bug */\n/*\n * Sign extension in the first char has no effect - nothing to overwrite yet,\n * and those extra 24 bits will be fully shifted out of the 32-bit word.  For\n * chars 2, 3, 4 in each four-char block, we set bit 7 of \"sign\" if sign\n * extension in arr_tmp[1] occurs.  Once this flag is set, it remains set.\n */\n\t\t\tif (j)\n\t\t\t\tsign |= arr_tmp[1] & 0x80;\n\t\t\tif (!*ptr)\n\t\t\t\tptr = key;\n\t\t\telse\n\t\t\t\tptr++;\n\t\t}\n",
+    "ptr_map": {
+      "tmp": "tmp_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/crypt/crypt_des.c",
+    "line": 713,
+    "column": 2,
+    "source_code": "for (i = 0, ibit = 28; i < 4; i++, ibit -= 4) {\n\t\tunsigned int j = i << 1;\n\t\tk0 |= key_perm_maskl[i][(rawkey0 >> ibit) & 0xf] |\n\t\t      key_perm_maskl[i + 4][(rawkey1 >> ibit) & 0xf];\n\t\tk1 |= key_perm_maskr[j][(rawkey0 >> ibit) & 0xf];\n\t\tibit -= 4;\n\t\tk1 |= key_perm_maskr[j + 1][(rawkey0 >> ibit) & 0xf] |\n\t\t      key_perm_maskr[i + 8][(rawkey1 >> ibit) & 0xf];\n\t}\n",
+    "abstract_code": "for (i = 0, ibit = 28; i < 4; i++, ibit -= 4) {\n\t\tunsigned int j = i << 1;\n\t\tk0 |= arr_key_perm_maskl[i][(rawkey0 >> ibit) & 0xf] |\n\t\t      arr_key_perm_maskl[i + 4][(rawkey1 >> ibit) & 0xf];\n\t\tk1 |= arr_key_perm_maskr[j][(rawkey0 >> ibit) & 0xf];\n\t\tibit -= 4;\n\t\tk1 |= arr_key_perm_maskr[j + 1][(rawkey0 >> ibit) & 0xf] |\n\t\t      arr_key_perm_maskr[i + 8][(rawkey1 >> ibit) & 0xf];\n\t}\n",
+    "ptr_map": {
+      "key_perm_maskl": "key_perm_maskl_idx",
+      "key_perm_maskr": "key_perm_maskr_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/crypt/crypt_des.c",
+    "line": 738,
+    "column": 3,
+    "source_code": "for (i = 0; i < 4; i++) {\n\t\t\tkl |= comp_maskl0[i][(t0 >> ibit) & 7];\n\t\t\tkr |= comp_maskr0[i][(t1 >> ibit) & 7];\n\t\t\tibit -= 4;\n\t\t\tkl |= comp_maskl1[i][(t0 >> ibit) & 0xf];\n\t\t\tkr |= comp_maskr1[i][(t1 >> ibit) & 0xf];\n\t\t\tibit -= 3;\n\t\t}\n",
+    "abstract_code": "for (i = 0; i < 4; i++) {\n\t\t\tkl |= arr_comp_maskl0[i][(t0 >> ibit) & 7];\n\t\t\tkr |= arr_comp_maskr0[i][(t1 >> ibit) & 7];\n\t\t\tibit -= 4;\n\t\t\tkl |= arr_comp_maskl1[i][(t0 >> ibit) & 0xf];\n\t\t\tkr |= arr_comp_maskr1[i][(t1 >> ibit) & 0xf];\n\t\t\tibit -= 3;\n\t\t}\n",
+    "ptr_map": {
+      "comp_maskl0": "comp_maskl0_idx",
+      "comp_maskl1": "comp_maskl1_idx",
+      "comp_maskr1": "comp_maskr1_idx",
+      "comp_maskr0": "comp_maskr0_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/crypt/crypt_des.c",
+    "line": 766,
+    "column": 3,
+    "source_code": "for (i = 0, ibit = 28; i < 8; i++, ibit -= 4) {\n\t\t\tl |= ip_maskl[i][(l_in >> ibit) & 0xf] |\n\t\t\t     ip_maskl[i + 8][(r_in >> ibit) & 0xf];\n\t\t\tr |= ip_maskr[i][(l_in >> ibit) & 0xf] |\n\t\t\t     ip_maskr[i + 8][(r_in >> ibit) & 0xf];\n\t\t}\n",
+    "abstract_code": "for (i = 0, ibit = 28; i < 8; i++, ibit -= 4) {\n\t\t\tl |= arr_ip_maskl[i][(l_in >> ibit) & 0xf] |\n\t\t\t     arr_ip_maskl[i + 8][(r_in >> ibit) & 0xf];\n\t\t\tr |= arr_ip_maskr[i][(l_in >> ibit) & 0xf] |\n\t\t\t     arr_ip_maskr[i + 8][(r_in >> ibit) & 0xf];\n\t\t}\n",
+    "ptr_map": {
+      "ip_maskr": "ip_maskr_idx",
+      "ip_maskl": "ip_maskl_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/crypt/crypt_des.c",
+    "line": 782,
+    "column": 3,
+    "source_code": "while (round--) {\n\t\t\tuint32_t r48l, r48r;\n\t\t\t/*\n\t\t\t * Expand R to 48 bits (simulate the E-box).\n\t\t\t */\n\t\t\tr48l\t= ((r & 0x00000001) << 23)\n\t\t\t\t| ((r & 0xf8000000) >> 9)\n\t\t\t\t| ((r & 0x1f800000) >> 11)\n\t\t\t\t| ((r & 0x01f80000) >> 13)\n\t\t\t\t| ((r & 0x001f8000) >> 15);\n\n\t\t\tr48r\t= ((r & 0x0001f800) << 7)\n\t\t\t\t| ((r & 0x00001f80) << 5)\n\t\t\t\t| ((r & 0x000001f8) << 3)\n\t\t\t\t| ((r & 0x0000001f) << 1)\n\t\t\t\t| ((r & 0x80000000) >> 31);\n\t\t\t/*\n\t\t\t * Do salting for crypt() and friends, and\n\t\t\t * XOR with the permuted key.\n\t\t\t */\n\t\t\tf = (r48l ^ r48r) & saltbits;\n\t\t\tr48l ^= f ^ *kl++;\n\t\t\tr48r ^= f ^ *kr++;\n\t\t\t/*\n\t\t\t * Do S-box lookups (which shrink it back to 32 bits)\n\t\t\t * and do the P-box permutation at the same time.\n\t\t\t */\n\t\t\tf = psbox[0][r48l >> 18]\n\t\t\t  | psbox[1][(r48l >> 12) & 0x3f]\n\t\t\t  | psbox[2][(r48l >> 6) & 0x3f]\n\t\t\t  | psbox[3][r48l & 0x3f]\n\t\t\t  | psbox[4][r48r >> 18]\n\t\t\t  | psbox[5][(r48r >> 12) & 0x3f]\n\t\t\t  | psbox[6][(r48r >> 6) & 0x3f]\n\t\t\t  | psbox[7][r48r & 0x3f];\n\t\t\t/*\n\t\t\t * Now that we've permuted things, complete f().\n\t\t\t */\n\t\t\tf ^= l;\n\t\t\tl = r;\n\t\t\tr = f;\n\t\t}\n",
+    "abstract_code": "while (round--) {\n\t\t\tuint32_t r48l, r48r;\n\t\t\t/*\n\t\t\t * Expand R to 48 bits (simulate the E-box).\n\t\t\t */\n\t\t\tr48l\t= ((r & 0x00000001) << 23)\n\t\t\t\t| ((r & 0xf8000000) >> 9)\n\t\t\t\t| ((r & 0x1f800000) >> 11)\n\t\t\t\t| ((r & 0x01f80000) >> 13)\n\t\t\t\t| ((r & 0x001f8000) >> 15);\n\n\t\t\tr48r\t= ((r & 0x0001f800) << 7)\n\t\t\t\t| ((r & 0x00001f80) << 5)\n\t\t\t\t| ((r & 0x000001f8) << 3)\n\t\t\t\t| ((r & 0x0000001f) << 1)\n\t\t\t\t| ((r & 0x80000000) >> 31);\n\t\t\t/*\n\t\t\t * Do salting for crypt() and friends, and\n\t\t\t * XOR with the permuted key.\n\t\t\t */\n\t\t\tf = (r48l ^ r48r) & saltbits;\n\t\t\tr48l ^= f ^ *kl++;\n\t\t\tr48r ^= f ^ *kr++;\n\t\t\t/*\n\t\t\t * Do S-box lookups (which shrink it back to 32 bits)\n\t\t\t * and do the P-box permutation at the same time.\n\t\t\t */\n\t\t\tf = arr_psbox[0][r48l >> 18]\n\t\t\t  | arr_psbox[1][(r48l >> 12) & 0x3f]\n\t\t\t  | arr_psbox[2][(r48l >> 6) & 0x3f]\n\t\t\t  | arr_psbox[3][r48l & 0x3f]\n\t\t\t  | arr_psbox[4][r48r >> 18]\n\t\t\t  | arr_psbox[5][(r48r >> 12) & 0x3f]\n\t\t\t  | arr_psbox[6][(r48r >> 6) & 0x3f]\n\t\t\t  | arr_psbox[7][r48r & 0x3f];\n\t\t\t/*\n\t\t\t * Now that we've permuted things, complete f().\n\t\t\t */\n\t\t\tf ^= l;\n\t\t\tl = r;\n\t\t\tr = f;\n\t\t}\n",
+    "ptr_map": {
+      "psbox": "psbox_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/crypt/crypt_des.c",
+    "line": 835,
+    "column": 3,
+    "source_code": "for (i = 0, ibit = 28; i < 4; i++, ibit -= 4) {\n\t\t\tro |= fp_maskr[i][(l >> ibit) & 0xf] |\n\t\t\t      fp_maskr[i + 4][(r >> ibit) & 0xf];\n\t\t\tibit -= 4;\n\t\t\tlo |= fp_maskl[i][(l >> ibit) & 0xf] |\n\t\t\t      fp_maskl[i + 4][(r >> ibit) & 0xf];\n\t\t}\n",
+    "abstract_code": "for (i = 0, ibit = 28; i < 4; i++, ibit -= 4) {\n\t\t\tro |= arr_fp_maskr[i][(l >> ibit) & 0xf] |\n\t\t\t      arr_fp_maskr[i + 4][(r >> ibit) & 0xf];\n\t\t\tibit -= 4;\n\t\t\tlo |= arr_fp_maskl[i][(l >> ibit) & 0xf] |\n\t\t\t      arr_fp_maskl[i + 4][(r >> ibit) & 0xf];\n\t\t}\n",
+    "ptr_map": {
+      "fp_maskr": "fp_maskr_idx",
+      "fp_maskl": "fp_maskl_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/crypt/crypt_sha256.c",
+    "line": 48,
+    "column": 2,
+    "source_code": "for (i = 0; i < 16; i++) {\n\t\tW[i] = (uint32_t)buf[4*i]<<24;\n\t\tW[i] |= (uint32_t)buf[4*i+1]<<16;\n\t\tW[i] |= (uint32_t)buf[4*i+2]<<8;\n\t\tW[i] |= buf[4*i+3];\n\t}\n",
+    "abstract_code": "for (i = 0; i < 16; i++) {\n\t\tarr_W[i] = (uint32_t)arr_buf[4*i]<<24;\n\t\tarr_W[i] |= (uint32_t)arr_buf[4*i+1]<<16;\n\t\tarr_W[i] |= (uint32_t)arr_buf[4*i+2]<<8;\n\t\tarr_W[i] |= arr_buf[4*i+3];\n\t}\n",
+    "ptr_map": {
+      "buf": "buf_idx",
+      "W": "W_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/crypt/crypt_sha256.c",
+    "line": 161,
+    "column": 2,
+    "source_code": "while (--n >= 0) {\n\t\t*s++ = b64[u % 64];\n\t\tu /= 64;\n\t}\n",
+    "abstract_code": "while (--n >= 0) {\n\t\t*s++ = arr_b64[u % 64];\n\t\tu /= 64;\n\t}\n",
+    "ptr_map": {
+      "b64": "b64_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/crypt/crypt_sha256.c",
+    "line": 240,
+    "column": 2,
+    "source_code": "for (i = 0; i < SALT_MAX && salt[i] && salt[i] != '$'; i++)\n\t\t/* reject characters that interfere with /etc/shadow parsing */\n\t\tif (salt[i] == '\\n' || salt[i] == ':')\n\t\t\treturn 0;",
+    "abstract_code": "for (i = 0; i < SALT_MAX && arr_salt[i] && arr_salt[i] != '$'; i++)\n\t\t/* reject characters that interfere with /etc/shadow parsing */\n\t\tif (arr_salt[i] == '\\n' || arr_salt[i] == ':')\n\t\t\treturn 0;",
+    "ptr_map": {
+      "salt": "salt_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/crypt/crypt_md5.c",
+    "line": 45,
+    "column": 2,
+    "source_code": "for (i = 0; i < 16; i++) {\n\t\tW[i] = buf[4*i];\n\t\tW[i] |= (uint32_t)buf[4*i+1]<<8;\n\t\tW[i] |= (uint32_t)buf[4*i+2]<<16;\n\t\tW[i] |= (uint32_t)buf[4*i+3]<<24;\n\t}\n",
+    "abstract_code": "for (i = 0; i < 16; i++) {\n\t\tarr_W[i] = arr_buf[4*i];\n\t\tarr_W[i] |= (uint32_t)arr_buf[4*i+1]<<8;\n\t\tarr_W[i] |= (uint32_t)arr_buf[4*i+2]<<16;\n\t\tarr_W[i] |= (uint32_t)arr_buf[4*i+3]<<24;\n\t}\n",
+    "ptr_map": {
+      "buf": "buf_idx",
+      "W": "W_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/crypt/crypt_md5.c",
+    "line": 190,
+    "column": 2,
+    "source_code": "while (--n >= 0) {\n\t\t*s++ = b64[u % 64];\n\t\tu /= 64;\n\t}\n",
+    "abstract_code": "while (--n >= 0) {\n\t\t*s++ = arr_b64[u % 64];\n\t\tu /= 64;\n\t}\n",
+    "ptr_map": {
+      "b64": "b64_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/crypt/crypt_md5.c",
+    "line": 214,
+    "column": 2,
+    "source_code": "for (i = 0; i < SALT_MAX && salt[i] && salt[i] != '$'; i++);\n",
+    "abstract_code": "for (i = 0; i < SALT_MAX && arr_salt[i] && arr_salt[i] != '$'; i++);\n",
+    "ptr_map": {
+      "salt": "salt_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/crypt/crypt_sha512.c",
+    "line": 61,
+    "column": 2,
+    "source_code": "for (i = 0; i < 16; i++) {\n\t\tW[i] = (uint64_t)buf[8*i]<<56;\n\t\tW[i] |= (uint64_t)buf[8*i+1]<<48;\n\t\tW[i] |= (uint64_t)buf[8*i+2]<<40;\n\t\tW[i] |= (uint64_t)buf[8*i+3]<<32;\n\t\tW[i] |= (uint64_t)buf[8*i+4]<<24;\n\t\tW[i] |= (uint64_t)buf[8*i+5]<<16;\n\t\tW[i] |= (uint64_t)buf[8*i+6]<<8;\n\t\tW[i] |= buf[8*i+7];\n\t}\n",
+    "abstract_code": "for (i = 0; i < 16; i++) {\n\t\tarr_W[i] = (uint64_t)arr_buf[8*i]<<56;\n\t\tarr_W[i] |= (uint64_t)arr_buf[8*i+1]<<48;\n\t\tarr_W[i] |= (uint64_t)arr_buf[8*i+2]<<40;\n\t\tarr_W[i] |= (uint64_t)arr_buf[8*i+3]<<32;\n\t\tarr_W[i] |= (uint64_t)arr_buf[8*i+4]<<24;\n\t\tarr_W[i] |= (uint64_t)arr_buf[8*i+5]<<16;\n\t\tarr_W[i] |= (uint64_t)arr_buf[8*i+6]<<8;\n\t\tarr_W[i] |= arr_buf[8*i+7];\n\t}\n",
+    "ptr_map": {
+      "buf": "buf_idx",
+      "W": "W_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/crypt/crypt_sha512.c",
+    "line": 182,
+    "column": 2,
+    "source_code": "while (--n >= 0) {\n\t\t*s++ = b64[u % 64];\n\t\tu /= 64;\n\t}\n",
+    "abstract_code": "while (--n >= 0) {\n\t\t*s++ = arr_b64[u % 64];\n\t\tu /= 64;\n\t}\n",
+    "ptr_map": {
+      "b64": "b64_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/crypt/crypt_sha512.c",
+    "line": 218,
+    "column": 2,
+    "source_code": "for (i = 0; i <= KEY_MAX && key[i]; i++);\n",
+    "abstract_code": "for (i = 0; i <= KEY_MAX && arr_key[i]; i++);\n",
+    "ptr_map": {
+      "key": "key_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/crypt/crypt_sha512.c",
+    "line": 262,
+    "column": 2,
+    "source_code": "for (i = 0; i < SALT_MAX && salt[i] && salt[i] != '$'; i++)\n\t\t/* reject characters that interfere with /etc/shadow parsing */\n\t\tif (salt[i] == '\\n' || salt[i] == ':')\n\t\t\treturn 0;",
+    "abstract_code": "for (i = 0; i < SALT_MAX && arr_salt[i] && arr_salt[i] != '$'; i++)\n\t\t/* reject characters that interfere with /etc/shadow parsing */\n\t\tif (arr_salt[i] == '\\n' || arr_salt[i] == ':')\n\t\t\treturn 0;",
+    "ptr_map": {
+      "salt": "salt_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/signal/sigandset.c",
+    "line": 9,
+    "column": 2,
+    "source_code": "for(; i < SST_SIZE; i++) d[i] = l[i] & r[i];",
+    "abstract_code": "for(; i < SST_SIZE; i++) arr_d[i] = arr_l[i] & arr_r[i];",
+    "ptr_map": {
+      "d": "d_idx",
+      "r": "r_idx",
+      "l": "l_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/signal/sigorset.c",
+    "line": 9,
+    "column": 2,
+    "source_code": "for(; i < SST_SIZE; i++) d[i] = l[i] | r[i];",
+    "abstract_code": "for(; i < SST_SIZE; i++) arr_d[i] = arr_l[i] | arr_r[i];",
+    "ptr_map": {
+      "d": "d_idx",
+      "r": "r_idx",
+      "l": "l_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/string/memmove.c",
+    "line": 31,
+    "column": 4,
+    "source_code": "while ((uintptr_t)(d+n) % WS) {\n\t\t\t\tif (!n--) return dest;\n\t\t\t\td[n] = s[n];\n\t\t\t}\n",
+    "abstract_code": "while ((uintptr_t)(d+n) % WS) {\n\t\t\t\tif (!n--) return dest;\n\t\t\t\tarr_d[n] = arr_s[n];\n\t\t\t}\n",
+    "ptr_map": {
+      "d": "d_idx",
+      "s": "s_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/string/memmove.c",
+    "line": 38,
+    "column": 3,
+    "source_code": "while (n) n--, d[n] = s[n];",
+    "abstract_code": "while (n) n--, arr_d[n] = arr_s[n];",
+    "ptr_map": {
+      "d": "d_idx",
+      "s": "s_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/string/memrchr.c",
+    "line": 7,
+    "column": 2,
+    "source_code": "while (n--) if (s[n]==c) return (void *)(s+n);",
+    "abstract_code": "while (n--) if (arr_s[n]==c) return (void *)(s+n);",
+    "ptr_map": {
+      "s": "s_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/string/strstr.c",
+    "line": 41,
+    "column": 2,
+    "source_code": "for (l=0; n[l] && h[l]; l++)\n\t\tBITOP(byteset, n[l], |=), shift[n[l]] = l+1;",
+    "abstract_code": "for (l=0; arr_n[l] && arr_h[l]; l++)\n\t\tBITOP(byteset, arr_n[l], |=), arr_shift[arr_n[l]] = l+1;",
+    "ptr_map": {
+      "h": "h_idx",
+      "n": "n_idx",
+      "shift": "shift_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/string/strstr.c",
+    "line": 47,
+    "column": 2,
+    "source_code": "while (jp+k<l) {\n\t\tif (n[ip+k] == n[jp+k]) {\n\t\t\tif (k == p) {\n\t\t\t\tjp += p;\n\t\t\t\tk = 1;\n\t\t\t} else k++;\n\t\t} else if (n[ip+k] > n[jp+k]) {\n\t\t\tjp += k;\n\t\t\tk = 1;\n\t\t\tp = jp - ip;\n\t\t} else {\n\t\t\tip = jp++;\n\t\t\tk = p = 1;\n\t\t}\n\t}\n",
+    "abstract_code": "while (jp+k<l) {\n\t\tif (arr_n[ip+k] == arr_n[jp+k]) {\n\t\t\tif (k == p) {\n\t\t\t\tjp += p;\n\t\t\t\tk = 1;\n\t\t\t} else k++;\n\t\t} else if (arr_n[ip+k] > arr_n[jp+k]) {\n\t\t\tjp += k;\n\t\t\tk = 1;\n\t\t\tp = jp - ip;\n\t\t} else {\n\t\t\tip = jp++;\n\t\t\tk = p = 1;\n\t\t}\n\t}\n",
+    "ptr_map": {
+      "n": "n_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/string/strstr.c",
+    "line": 67,
+    "column": 2,
+    "source_code": "while (jp+k<l) {\n\t\tif (n[ip+k] == n[jp+k]) {\n\t\t\tif (k == p) {\n\t\t\t\tjp += p;\n\t\t\t\tk = 1;\n\t\t\t} else k++;\n\t\t} else if (n[ip+k] < n[jp+k]) {\n\t\t\tjp += k;\n\t\t\tk = 1;\n\t\t\tp = jp - ip;\n\t\t} else {\n\t\t\tip = jp++;\n\t\t\tk = p = 1;\n\t\t}\n\t}\n",
+    "abstract_code": "while (jp+k<l) {\n\t\tif (arr_n[ip+k] == arr_n[jp+k]) {\n\t\t\tif (k == p) {\n\t\t\t\tjp += p;\n\t\t\t\tk = 1;\n\t\t\t} else k++;\n\t\t} else if (arr_n[ip+k] < arr_n[jp+k]) {\n\t\t\tjp += k;\n\t\t\tk = 1;\n\t\t\tp = jp - ip;\n\t\t} else {\n\t\t\tip = jp++;\n\t\t\tk = p = 1;\n\t\t}\n\t}\n",
+    "ptr_map": {
+      "n": "n_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/string/strstr.c",
+    "line": 124,
+    "column": 3,
+    "source_code": "for (k=MAX(ms+1,mem); n[k] && n[k] == h[k]; k++);\n",
+    "abstract_code": "for (k=MAX(ms+1,mem); arr_n[k] && arr_n[k] == arr_h[k]; k++);\n",
+    "ptr_map": {
+      "h": "h_idx",
+      "n": "n_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/string/strstr.c",
+    "line": 131,
+    "column": 3,
+    "source_code": "for (k=ms+1; k>mem && n[k-1] == h[k-1]; k--);\n",
+    "abstract_code": "for (k=ms+1; k>mem && arr_n[k-1] == arr_h[k-1]; k--);\n",
+    "ptr_map": {
+      "h": "h_idx",
+      "n": "n_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/string/memmem.c",
+    "line": 44,
+    "column": 2,
+    "source_code": "for (i=0; i<l; i++)\n\t\tBITOP(byteset, n[i], |=), shift[n[i]] = i+1;",
+    "abstract_code": "for (i=0; i<l; i++)\n\t\tBITOP(byteset, arr_n[i], |=), arr_shift[arr_n[i]] = i+1;",
+    "ptr_map": {
+      "n": "n_idx",
+      "shift": "shift_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/string/memmem.c",
+    "line": 49,
+    "column": 2,
+    "source_code": "while (jp+k<l) {\n\t\tif (n[ip+k] == n[jp+k]) {\n\t\t\tif (k == p) {\n\t\t\t\tjp += p;\n\t\t\t\tk = 1;\n\t\t\t} else k++;\n\t\t} else if (n[ip+k] > n[jp+k]) {\n\t\t\tjp += k;\n\t\t\tk = 1;\n\t\t\tp = jp - ip;\n\t\t} else {\n\t\t\tip = jp++;\n\t\t\tk = p = 1;\n\t\t}\n\t}\n",
+    "abstract_code": "while (jp+k<l) {\n\t\tif (arr_n[ip+k] == arr_n[jp+k]) {\n\t\t\tif (k == p) {\n\t\t\t\tjp += p;\n\t\t\t\tk = 1;\n\t\t\t} else k++;\n\t\t} else if (arr_n[ip+k] > arr_n[jp+k]) {\n\t\t\tjp += k;\n\t\t\tk = 1;\n\t\t\tp = jp - ip;\n\t\t} else {\n\t\t\tip = jp++;\n\t\t\tk = p = 1;\n\t\t}\n\t}\n",
+    "ptr_map": {
+      "n": "n_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/string/memmem.c",
+    "line": 69,
+    "column": 2,
+    "source_code": "while (jp+k<l) {\n\t\tif (n[ip+k] == n[jp+k]) {\n\t\t\tif (k == p) {\n\t\t\t\tjp += p;\n\t\t\t\tk = 1;\n\t\t\t} else k++;\n\t\t} else if (n[ip+k] < n[jp+k]) {\n\t\t\tjp += k;\n\t\t\tk = 1;\n\t\t\tp = jp - ip;\n\t\t} else {\n\t\t\tip = jp++;\n\t\t\tk = p = 1;\n\t\t}\n\t}\n",
+    "abstract_code": "while (jp+k<l) {\n\t\tif (arr_n[ip+k] == arr_n[jp+k]) {\n\t\t\tif (k == p) {\n\t\t\t\tjp += p;\n\t\t\t\tk = 1;\n\t\t\t} else k++;\n\t\t} else if (arr_n[ip+k] < arr_n[jp+k]) {\n\t\t\tjp += k;\n\t\t\tk = 1;\n\t\t\tp = jp - ip;\n\t\t} else {\n\t\t\tip = jp++;\n\t\t\tk = p = 1;\n\t\t}\n\t}\n",
+    "ptr_map": {
+      "n": "n_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/string/memmem.c",
+    "line": 115,
+    "column": 3,
+    "source_code": "for (k=MAX(ms+1,mem); k<l && n[k] == h[k]; k++);\n",
+    "abstract_code": "for (k=MAX(ms+1,mem); k<l && arr_n[k] == arr_h[k]; k++);\n",
+    "ptr_map": {
+      "h": "h_idx",
+      "n": "n_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/string/memmem.c",
+    "line": 122,
+    "column": 3,
+    "source_code": "for (k=ms+1; k>mem && n[k-1] == h[k-1]; k--);\n",
+    "abstract_code": "for (k=ms+1; k>mem && arr_n[k-1] == arr_h[k-1]; k--);\n",
+    "ptr_map": {
+      "h": "h_idx",
+      "n": "n_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/string/swab.c",
+    "line": 7,
+    "column": 2,
+    "source_code": "for (; n>1; n-=2) {\n\t\tdest[0] = src[1];\n\t\tdest[1] = src[0];\n\t\tdest += 2;\n\t\tsrc += 2;\n\t}\n",
+    "abstract_code": "for (; n>1; n-=2) {\n\t\tarr_dest[0] = arr_src[1];\n\t\tarr_dest[1] = arr_src[0];\n\t\tdest += 2;\n\t\tsrc += 2;\n\t}\n",
+    "ptr_map": {
+      "src": "src_idx",
+      "dest": "dest_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/string/wcsstr.c",
+    "line": 12,
+    "column": 2,
+    "source_code": "for (l=0; n[l] && h[l]; l++);\n",
+    "abstract_code": "for (l=0; arr_n[l] && arr_h[l]; l++);\n",
+    "ptr_map": {
+      "h": "h_idx",
+      "n": "n_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/string/wcsstr.c",
+    "line": 17,
+    "column": 2,
+    "source_code": "while (jp+k<l) {\n\t\tif (n[ip+k] == n[jp+k]) {\n\t\t\tif (k == p) {\n\t\t\t\tjp += p;\n\t\t\t\tk = 1;\n\t\t\t} else k++;\n\t\t} else if (n[ip+k] > n[jp+k]) {\n\t\t\tjp += k;\n\t\t\tk = 1;\n\t\t\tp = jp - ip;\n\t\t} else {\n\t\t\tip = jp++;\n\t\t\tk = p = 1;\n\t\t}\n\t}\n",
+    "abstract_code": "while (jp+k<l) {\n\t\tif (arr_n[ip+k] == arr_n[jp+k]) {\n\t\t\tif (k == p) {\n\t\t\t\tjp += p;\n\t\t\t\tk = 1;\n\t\t\t} else k++;\n\t\t} else if (arr_n[ip+k] > arr_n[jp+k]) {\n\t\t\tjp += k;\n\t\t\tk = 1;\n\t\t\tp = jp - ip;\n\t\t} else {\n\t\t\tip = jp++;\n\t\t\tk = p = 1;\n\t\t}\n\t}\n",
+    "ptr_map": {
+      "n": "n_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/string/wcsstr.c",
+    "line": 37,
+    "column": 2,
+    "source_code": "while (jp+k<l) {\n\t\tif (n[ip+k] == n[jp+k]) {\n\t\t\tif (k == p) {\n\t\t\t\tjp += p;\n\t\t\t\tk = 1;\n\t\t\t} else k++;\n\t\t} else if (n[ip+k] < n[jp+k]) {\n\t\t\tjp += k;\n\t\t\tk = 1;\n\t\t\tp = jp - ip;\n\t\t} else {\n\t\t\tip = jp++;\n\t\t\tk = p = 1;\n\t\t}\n\t}\n",
+    "abstract_code": "while (jp+k<l) {\n\t\tif (arr_n[ip+k] == arr_n[jp+k]) {\n\t\t\tif (k == p) {\n\t\t\t\tjp += p;\n\t\t\t\tk = 1;\n\t\t\t} else k++;\n\t\t} else if (arr_n[ip+k] < arr_n[jp+k]) {\n\t\t\tjp += k;\n\t\t\tk = 1;\n\t\t\tp = jp - ip;\n\t\t} else {\n\t\t\tip = jp++;\n\t\t\tk = p = 1;\n\t\t}\n\t}\n",
+    "ptr_map": {
+      "n": "n_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/string/wcsstr.c",
+    "line": 79,
+    "column": 3,
+    "source_code": "for (k=MAX(ms+1,mem); n[k] && n[k] == h[k]; k++);\n",
+    "abstract_code": "for (k=MAX(ms+1,mem); arr_n[k] && arr_n[k] == arr_h[k]; k++);\n",
+    "ptr_map": {
+      "h": "h_idx",
+      "n": "n_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/string/wcsstr.c",
+    "line": 86,
+    "column": 3,
+    "source_code": "for (k=ms+1; k>mem && n[k-1] == h[k-1]; k--);\n",
+    "abstract_code": "for (k=ms+1; k>mem && arr_n[k-1] == arr_h[k-1]; k--);\n",
+    "ptr_map": {
+      "h": "h_idx",
+      "n": "n_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/string/wmemmove.c",
+    "line": 9,
+    "column": 3,
+    "source_code": "while (n--) d[n] = s[n];",
+    "abstract_code": "while (n--) arr_d[n] = arr_s[n];",
+    "ptr_map": {
+      "d": "d_idx",
+      "s": "s_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/linux/prctl.c",
+    "line": 11,
+    "column": 2,
+    "source_code": "for (i=0; i<4; i++) x[i] = va_arg(ap, unsigned long);",
+    "abstract_code": "for (i=0; i<4; i++) arr_x[i] = va_arg(ap, unsigned long);",
+    "ptr_map": {
+      "x": "x_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/stdio/vfscanf.c",
+    "line": 218,
+    "column": 7,
+    "source_code": "for (c=p++[-1]; c<*p; c++)\n\t\t\t\t\t\t\tscanset[1+c] = 1-invert;",
+    "abstract_code": "for (c=p++[-1]; c<*p; c++)\n\t\t\t\t\t\t\tarr_scanset[1+c] = 1-invert;",
+    "ptr_map": {
+      "scanset": "scanset_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/stdio/vfprintf.c",
+    "line": 155,
+    "column": 2,
+    "source_code": "for (; x; x>>=4) *--s = xdigits[(x&15)]|lower;",
+    "abstract_code": "for (; x; x>>=4) *--s = arr_xdigits[(x&15)]|lower;",
+    "ptr_map": {
+      "xdigits": "xdigits_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/stdio/vfprintf.c",
+    "line": 287,
+    "column": 3,
+    "source_code": "while (z>a && !z[-1]) z--;",
+    "abstract_code": "while (z>a && !arr_z[-1]) z_idx--;",
+    "ptr_map": {
+      "z": "z_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/stdio/vfprintf.c",
+    "line": 343,
+    "column": 2,
+    "source_code": "for (; z>a && !z[-1]; z--);\n",
+    "abstract_code": "for (; z>a && !arr_z[-1]; z_idx--);\n",
+    "ptr_map": {
+      "z": "z_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/stdio/vfprintf.c",
+    "line": 356,
+    "column": 22,
+    "source_code": "for (i=10, j=0; z[-1]%i==0; i*=10, j++);\n",
+    "abstract_code": "for (i=10, j=0; arr_z[-1]%i==0; i*=10, j++);\n",
+    "ptr_map": {
+      "z": "z_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/stdio/fwrite.c",
+    "line": 14,
+    "column": 3,
+    "source_code": "for (i=l; i && s[i-1] != '\\n'; i--);\n",
+    "abstract_code": "for (i=l; i && arr_s[i-1] != '\\n'; i--);\n",
+    "ptr_map": {
+      "s": "s_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "WHILE_STMT",
+    "file_path": "../musl/src/stdio/gets.c",
+    "line": 10,
+    "column": 2,
+    "source_code": "while ((c=getc_unlocked(stdin)) != EOF && c != '\\n') s[i++] = c;",
+    "abstract_code": "while ((c=getc_unlocked(stdin)) != EOF && c != '\\n') arr_s[i++] = c;",
+    "ptr_map": {
+      "s": "s_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/internal/floatscan.c",
+    "line": 93,
+    "column": 2,
+    "source_code": "for (; c-'0'<10U || c=='.'; c = shgetc(f)) {\n\t\tif (c == '.') {\n\t\t\tif (gotrad) break;\n\t\t\tgotrad = 1;\n\t\t\tlrp = dc;\n\t\t} else if (k < KMAX-3) {\n\t\t\tdc++;\n\t\t\tif (c!='0') lnz = dc;\n\t\t\tif (j) x[k] = x[k]*10 + c-'0';\n\t\t\telse x[k] = c-'0';\n\t\t\tif (++j==9) {\n\t\t\t\tk++;\n\t\t\t\tj=0;\n\t\t\t}\n\t\t\tgotdig=1;\n\t\t} else {\n\t\t\tdc++;\n\t\t\tif (c!='0') {\n\t\t\t\tlnz = (KMAX-4)*9;\n\t\t\t\tx[KMAX-4] |= 1;\n\t\t\t}\n\t\t}\n\t}\n",
+    "abstract_code": "for (; c-'0'<10U || c=='.'; c = shgetc(f)) {\n\t\tif (c == '.') {\n\t\t\tif (gotrad) break;\n\t\t\tgotrad = 1;\n\t\t\tlrp = dc;\n\t\t} else if (k < KMAX-3) {\n\t\t\tdc++;\n\t\t\tif (c!='0') lnz = dc;\n\t\t\tif (j) arr_x[k] = arr_x[k]*10 + c-'0';\n\t\t\telse arr_x[k] = c-'0';\n\t\t\tif (++j==9) {\n\t\t\t\tk++;\n\t\t\t\tj=0;\n\t\t\t}\n\t\t\tgotdig=1;\n\t\t} else {\n\t\t\tdc++;\n\t\t\tif (c!='0') {\n\t\t\t\tlnz = (KMAX-4)*9;\n\t\t\t\tarr_x[KMAX-4] |= 1;\n\t\t\t}\n\t\t}\n\t}\n",
+    "ptr_map": {
+      "x": "x_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/internal/floatscan.c",
+    "line": 156,
+    "column": 3,
+    "source_code": "for (; j<9; j++) x[k]*=10;",
+    "abstract_code": "for (; j<9; j++) arr_x[k]*=10;",
+    "ptr_map": {
+      "x": "x_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/internal/floatscan.c",
+    "line": 176,
+    "column": 2,
+    "source_code": "for (; !x[z-1]; z--);\n",
+    "abstract_code": "for (; !arr_x[z-1]; z--);\n",
+    "ptr_map": {
+      "x": "x_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/internal/floatscan.c",
+    "line": 183,
+    "column": 3,
+    "source_code": "for (k=a; k!=z; k++) {\n\t\t\tuint32_t tmp = x[k] % p10;\n\t\t\tx[k] = x[k]/p10 + carry;\n\t\t\tcarry = 1000000000/p10 * tmp;\n\t\t\tif (k==a && !x[k]) {\n\t\t\t\ta = (a+1 & MASK);\n\t\t\t\trp -= 9;\n\t\t\t}\n\t\t}\n",
+    "abstract_code": "for (k=a; k!=z; k++) {\n\t\t\tuint32_t tmp = arr_x[k] % p10;\n\t\t\tarr_x[k] = arr_x[k]/p10 + carry;\n\t\t\tcarry = 1000000000/p10 * tmp;\n\t\t\tif (k==a && !arr_x[k]) {\n\t\t\t\ta = (a+1 & MASK);\n\t\t\t\trp -= 9;\n\t\t\t}\n\t\t}\n",
+    "ptr_map": {
+      "x": "x_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/internal/floatscan.c",
+    "line": 200,
+    "column": 3,
+    "source_code": "for (k=(z-1 & MASK); ; k=(k-1 & MASK)) {\n\t\t\tuint64_t tmp = ((uint64_t)x[k] << 29) + carry;\n\t\t\tif (tmp > 1000000000) {\n\t\t\t\tcarry = tmp / 1000000000;\n\t\t\t\tx[k] = tmp % 1000000000;\n\t\t\t} else {\n\t\t\t\tcarry = 0;\n\t\t\t\tx[k] = tmp;\n\t\t\t}\n\t\t\tif (k==(z-1 & MASK) && k!=a && !x[k]) z = k;\n\t\t\tif (k==a) break;\n\t\t}\n",
+    "abstract_code": "for (k=(z-1 & MASK); ; k=(k-1 & MASK)) {\n\t\t\tuint64_t tmp = ((uint64_t)arr_x[k] << 29) + carry;\n\t\t\tif (tmp > 1000000000) {\n\t\t\t\tcarry = tmp / 1000000000;\n\t\t\t\tarr_x[k] = tmp % 1000000000;\n\t\t\t} else {\n\t\t\t\tcarry = 0;\n\t\t\t\tarr_x[k] = tmp;\n\t\t\t}\n\t\t\tif (k==(z-1 & MASK) && k!=a && !arr_x[k]) z = k;\n\t\t\tif (k==a) break;\n\t\t}\n",
+    "ptr_map": {
+      "x": "x_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/internal/floatscan.c",
+    "line": 227,
+    "column": 3,
+    "source_code": "for (i=0; i<LD_B1B_DIG; i++) {\n\t\t\tk = (a+i & MASK);\n\t\t\tif (k == z || x[k] < th[i]) {\n\t\t\t\ti=LD_B1B_DIG;\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tif (x[a+i & MASK] > th[i]) break;\n\t\t}\n",
+    "abstract_code": "for (i=0; i<LD_B1B_DIG; i++) {\n\t\t\tk = (a+i & MASK);\n\t\t\tif (k == z || arr_x[k] < arr_th[i]) {\n\t\t\t\ti=LD_B1B_DIG;\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tif (arr_x[a+i & MASK] > arr_th[i]) break;\n\t\t}\n",
+    "ptr_map": {
+      "th": "th_idx",
+      "x": "x_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/internal/floatscan.c",
+    "line": 239,
+    "column": 3,
+    "source_code": "for (k=a; k!=z; k=(k+1 & MASK)) {\n\t\t\tuint32_t tmp = x[k] & (1<<sh)-1;\n\t\t\tx[k] = (x[k]>>sh) + carry;\n\t\t\tcarry = (1000000000>>sh) * tmp;\n\t\t\tif (k==a && !x[k]) {\n\t\t\t\ta = (a+1 & MASK);\n\t\t\t\ti--;\n\t\t\t\trp -= 9;\n\t\t\t}\n\t\t}\n",
+    "abstract_code": "for (k=a; k!=z; k=(k+1 & MASK)) {\n\t\t\tuint32_t tmp = arr_x[k] & (1<<sh)-1;\n\t\t\tarr_x[k] = (arr_x[k]>>sh) + carry;\n\t\t\tcarry = (1000000000>>sh) * tmp;\n\t\t\tif (k==a && !arr_x[k]) {\n\t\t\t\ta = (a+1 & MASK);\n\t\t\t\ti--;\n\t\t\t\trp -= 9;\n\t\t\t}\n\t\t}\n",
+    "ptr_map": {
+      "x": "x_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/internal/floatscan.c",
+    "line": 258,
+    "column": 2,
+    "source_code": "for (y=i=0; i<LD_B1B_DIG; i++) {\n\t\tif ((a+i & MASK)==z) x[(z=(z+1 & MASK))-1] = 0;\n\t\ty = 1000000000.0L * y + x[a+i & MASK];\n\t}\n",
+    "abstract_code": "for (y=i=0; i<LD_B1B_DIG; i++) {\n\t\tif ((a+i & MASK)==z) arr_x[(z=(z+1 & MASK))-1] = 0;\n\t\ty = 1000000000.0L * y + arr_x[a+i & MASK];\n\t}\n",
+    "ptr_map": {
+      "x": "x_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/internal/intscan.c",
+    "line": 72,
+    "column": 3,
+    "source_code": "for (x=0; val[c]<base && x<=UINT_MAX/32; c=shgetc(f))\n\t\t\tx = x<<bs | val[c];",
+    "abstract_code": "for (x=0; arr_val[c]<base && x<=UINT_MAX/32; c=shgetc(f))\n\t\t\tx = x<<bs | arr_val[c];",
+    "ptr_map": {
+      "val": "val_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/internal/intscan.c",
+    "line": 74,
+    "column": 3,
+    "source_code": "for (y=x; val[c]<base && y<=ULLONG_MAX>>bs; c=shgetc(f))\n\t\t\ty = y<<bs | val[c];",
+    "abstract_code": "for (y=x; arr_val[c]<base && y<=ULLONG_MAX>>bs; c=shgetc(f))\n\t\t\ty = y<<bs | arr_val[c];",
+    "ptr_map": {
+      "val": "val_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/internal/intscan.c",
+    "line": 77,
+    "column": 3,
+    "source_code": "for (x=0; val[c]<base && x<=UINT_MAX/36-1; c=shgetc(f))\n\t\t\tx = x*base + val[c];",
+    "abstract_code": "for (x=0; arr_val[c]<base && x<=UINT_MAX/36-1; c=shgetc(f))\n\t\t\tx = x*base + arr_val[c];",
+    "ptr_map": {
+      "val": "val_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/internal/intscan.c",
+    "line": 79,
+    "column": 3,
+    "source_code": "for (y=x; val[c]<base && y<=ULLONG_MAX/base && base*y<=ULLONG_MAX-val[c]; c=shgetc(f))\n\t\t\ty = y*base + val[c];",
+    "abstract_code": "for (y=x; arr_val[c]<base && y<=ULLONG_MAX/base && base*y<=ULLONG_MAX-arr_val[c]; c=shgetc(f))\n\t\t\ty = y*base + arr_val[c];",
+    "ptr_map": {
+      "val": "val_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/internal/intscan.c",
+    "line": 83,
+    "column": 3,
+    "source_code": "for (; val[c]<base; c=shgetc(f));\n",
+    "abstract_code": "for (; arr_val[c]<base; c=shgetc(f));\n",
+    "ptr_map": {
+      "val": "val_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/internal/procfdname.c",
+    "line": 6,
+    "column": 2,
+    "source_code": "for (i=0; (buf[i] = \"/proc/self/fd/\"[i]); i++);\n",
+    "abstract_code": "for (i=0; (arr_buf[i] = \"/proc/self/fd/\"[i]); i++);\n",
+    "ptr_map": {
+      "buf": "buf_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/internal/procfdname.c",
+    "line": 14,
+    "column": 2,
+    "source_code": "for (; fd; fd/=10) buf[--i] = '0' + fd%10;",
+    "abstract_code": "for (; fd; fd/=10) arr_buf[--i] = '0' + fd%10;",
+    "ptr_map": {
+      "buf": "buf_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/env/__libc_start_main.c",
+    "line": 27,
+    "column": 2,
+    "source_code": "for (i=0; envp[i]; i++);\n",
+    "abstract_code": "for (i=0; arr_envp[i]; i++);\n",
+    "ptr_map": {
+      "envp": "envp_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/env/__libc_start_main.c",
+    "line": 29,
+    "column": 2,
+    "source_code": "for (i=0; auxv[i]; i+=2) if (auxv[i]<AUX_CNT) aux[auxv[i]] = auxv[i+1];",
+    "abstract_code": "for (i=0; arr_auxv[i]; i+=2) if (arr_auxv[i]<AUX_CNT) arr_aux[arr_auxv[i]] = arr_auxv[i+1];",
+    "ptr_map": {
+      "aux": "aux_idx",
+      "auxv": "auxv_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/src/temp/__randname.c",
+    "line": 15,
+    "column": 2,
+    "source_code": "for (i=0; i<6; i++, r>>=5)\n\t\ttemplate[i] = 'A'+(r&15)+(r&16)*2;",
+    "abstract_code": "for (i=0; i<6; i++, r>>=5)\n\t\tarr_template[i] = 'A'+(r&15)+(r&16)*2;",
+    "ptr_map": {
+      "template": "template_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/ldso/dlstart.c",
+    "line": 29,
+    "column": 2,
+    "source_code": "for (i=argc+1; argv[i]; i++);\n",
+    "abstract_code": "for (i=argc+1; arr_argv[i]; i++);\n",
+    "ptr_map": {
+      "argv": "argv_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/ldso/dlstart.c",
+    "line": 123,
+    "column": 3,
+    "source_code": "for (i=0; dynv[i]; i+=2) if (dynv[i]==DT_MIPS_LOCAL_GOTNO)\n\t\t\tlocal_cnt = dynv[i+1];",
+    "abstract_code": "for (i=0; arr_dynv[i]; i+=2) if (arr_dynv[i]==DT_MIPS_LOCAL_GOTNO)\n\t\t\tlocal_cnt = arr_dynv[i+1];",
+    "ptr_map": {
+      "dynv": "dynv_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/ldso/dlstart.c",
+    "line": 125,
+    "column": 3,
+    "source_code": "for (i=0; i<local_cnt; i++) got[i] += base;",
+    "abstract_code": "for (i=0; i<local_cnt; i++) arr_got[i] += base;",
+    "ptr_map": {
+      "got": "got_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/ldso/dlstart.c",
+    "line": 152,
+    "column": 4,
+    "source_code": "for (size_t i=0, bitmap=rel[0]; bitmap>>=1; i++)\n\t\t\t\tif (bitmap&1)\n\t\t\t\t\trelr_addr[i] += base;",
+    "abstract_code": "for (size_t i=0, bitmap=arr_rel[0]; bitmap>>=1; i++)\n\t\t\t\tif (bitmap&1)\n\t\t\t\t\tarr_relr_addr[i] += base;",
+    "ptr_map": {
+      "rel": "rel_idx",
+      "relr_addr": "relr_addr_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/ldso/dynlink.c",
+    "line": 219,
+    "column": 2,
+    "source_code": "for (i=0; i<cnt; i++) a[i] = 0;",
+    "abstract_code": "for (i=0; i<cnt; i++) arr_a[i] = 0;",
+    "ptr_map": {
+      "a": "a_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/ldso/dynlink.c",
+    "line": 220,
+    "column": 2,
+    "source_code": "for (; v[0]; v+=2) if (v[0]-1<cnt-1) {\n\t\tif (v[0] < 8*sizeof(long))\n\t\t\ta[0] |= 1UL<<v[0];\n\t\ta[v[0]] = v[1];\n\t}\n",
+    "abstract_code": "for (; arr_v[0]; v+=2) if (arr_v[0]-1<cnt-1) {\n\t\tif (arr_v[0] < 8*sizeof(long))\n\t\t\tarr_a[0] |= 1UL<<arr_v[0];\n\t\tarr_a[arr_v[0]] = arr_v[1];\n\t}\n",
+    "ptr_map": {
+      "a": "a_idx",
+      "v": "v_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/ldso/dynlink.c",
+    "line": 229,
+    "column": 2,
+    "source_code": "for (; v[0]!=key; v+=2)\n\t\tif (!v[0]) return 0;",
+    "abstract_code": "for (; arr_v[0]!=key; v+=2)\n\t\tif (!arr_v[0]) return 0;",
+    "ptr_map": {
+      "v": "v_idx"
+    }
+  },
+  {
+    "project_name": "musl",
+    "project_version": "0784374d561435f7c787a555aeab8ede699ed298",
+    "kind": "FOR_STMT",
+    "file_path": "../musl/ldso/dynlink.c",
+    "line": 573,
+    "column": 4,
+    "source_code": "for (size_t bitmap=relr[0]; (bitmap>>=1); i++)\n\t\t\t\tif (bitmap&1)\n\t\t\t\t\treloc_addr[i] += (size_t)base;",
+    "abstract_code": "for (size_t bitmap=arr_relr[0]; (bitmap>>=1); i++)\n\t\t\t\tif (bitmap&1)\n\t\t\t\t\tarr_reloc_addr[i] += (size_t)base;",
+    "ptr_map": {
+      "reloc_addr": "reloc_addr_idx",
+      "relr": "relr_idx"
+    }
+  }
+]
