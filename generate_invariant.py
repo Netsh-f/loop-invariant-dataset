@@ -90,7 +90,8 @@ def main():
             ],
             stream=False
         )
-        invariant_code = response.choices[0].message.content.strip()
+        content = response.choices[0].message.content
+        invariant_code = content.strip() if content is not None else ""
         item["invariant"] = invariant_code
     with open("output/loop_invariant_dataset.json", "w", encoding="utf-8") as f:
         json.dump(loop_dataset, f, indent=2, ensure_ascii=False)

@@ -238,7 +238,7 @@ if __name__ == "__main__":
         {
             "name": "musl",
             "commit": "0784374d561435f7c787a555aeab8ede699ed298",
-            "root_path": "../musl",
+            "root_path": "./lib/musl",
             "clang_args": ['-I./musl/include'],
         }
     ]
