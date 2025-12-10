@@ -1,0 +1,11 @@
+[submodule "lib/busybox"]
+	path = lib/busybox
+	url = https://github.com/mirror/busybox.git
+	branch = v1.2.5
+[submodule "lib/coreutils"]
+	path = lib/coreutils
+	url = https://git.savannah.gnu.org/git/coreutils.git
+	branch = 1_36_stable
+[submodule "lib/musl"]
+	path = lib/musl
+	url = git://git.musl-libc.org/musl

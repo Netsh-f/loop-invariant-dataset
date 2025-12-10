@@ -20,29 +20,13 @@ pip install -r requirements.txt
 
 ### 2. 获取分析项目源码
 
-* musl源码获取
-
-本项目使用musl v1.2.5版本，仓库中不包含该源码，请自行获取，方法如下
+本项目已通过 git submodule 管理 musl、busybox、coreutils 源码，请执行以下指令以获取源码：
 
 ```shell
-git clone git://git.musl-libc.org/musl
-cd musl
-git checkout v1.2.5
+git submodule update --init --recursive
 ```
 
-* busybox源码获取
-
-```shell
-git clone https://github.com/mirror/busybox.git
-cd busybox
-git checkout 1_36_stable
-```
-
-* coreutils源码获取
-
-```shell
-git clone https://git.savannah.gnu.org/git/coreutils.git
-```
+musl 使用 v1.2.5 分支，busybox 使用 1_36_stable 分支。
 
 ### 3. 配置项目
 
