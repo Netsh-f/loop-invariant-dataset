@@ -65,17 +65,18 @@ def main():
     print(f"Found {total} loops to verify.")
 
     for idx, loop in enumerate(loops):
-        if "invariant" not in loop or not loop["invariant"].strip():
-            print(f"[{idx + 1}/{total}] Skipping: no invariant")
-            loop["cbmc_log"] = "No invariant provided"
+        if "verify_code" not in loop or not loop["verify_code"].strip():
+            print(f"[{idx + 1}/{total}] Skipping: no verify code")
+            loop["cbmc_log"] = "No verify code provided"
             loop["cbmc_result"] = "SKIPPED"
             continue
 
         print(
             f"[{idx + 1}/{total}] Running CBMC for loop at {loop.get('file_path', 'unknown')}:{loop.get('line', '?')}")
-        cbmc_res = run_cbmc_on_code(loop["invariant"])
+        cbmc_res = run_cbmc_on_code(loop["verify_code"])
         loop["cbmc_log"] = cbmc_res["log"]
         loop["cbmc_result"] = cbmc_res["result"]
+        print("result: " + cbmc_res["result"])
 
     # Save updated dataset
     with open(OUTPUT_JSON, 'w', encoding='utf-8') as f:
